@@ -47,3 +47,7 @@ venv.bak/
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# python manage.py dumpdata --format=json > mydump.json  # python manage.py loaddata mydump.json
+# utf-8 encoding is wrong, open in notepad and save as "UTF-8" NOT "UTF-8 with BOM"
+mydump.json

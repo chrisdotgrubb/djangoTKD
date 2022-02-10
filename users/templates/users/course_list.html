@@ -19,7 +19,7 @@
 					<td>{{ course.ages }}</td>
 					<td>{{ course.cost }}/{{ course.billing }}</td>
 					<td>{{ course.description }}</td>
-					<td>get instructors</td>
+					<td>{%  for instructor in course.instructor.all %}{{ instructor.last }}{% endfor %}</td>
 				</tr>
 			{% endfor %}
 		</table>
