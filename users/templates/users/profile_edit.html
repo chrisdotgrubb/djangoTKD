@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<form action="" method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Submit</button>
+		<a href="{% url 'users:profile' %}">
+			<button type="button">Cancel</button>
+		</a>
+	</form>
+{% endblock content %}

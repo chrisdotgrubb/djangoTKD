@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+	<div>
+		<div>
+			<h2>{{ user.username }}</h2>
+			<h2>{{ user.email }}</h2>
+			<h2>{{ user.profile.first }}</h2>
+			<h2>{{ user.profile.last }}</h2>
+			<h2>{{ user.profile.phone }}</h2>
+			<h2>{{ user.profile.about }}</h2>
+			<h2>{{ user.profile.location }}</h2>
+		</div>
+		<div>
+			<a href="{% url 'users:profile-edit' user.pk %}">edit my profile</a>
+			<a href="{% url 'users:user-profile' user.pk %}">my public profile</a>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+	<div>
+		<div>
+			<h2>{{ object.username }}</h2>
+			<h2>{{ object.profile.first }}</h2>
+			<h2>{{ object.profile.last }}</h2>
+			<h2>{{ object.profile.about }}</h2>
+			<h2>{{ object.profile.location }}</h2>
+		</div>
+		<div>
+			<a href="{% url 'users:profile' %}">my private profile</a>
+		</div>
+	</div>
+{% endblock %}

@@ -31,7 +31,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	created = models.DateTimeField(auto_now_add=True)
 	last_login = models.DateTimeField(blank=True, null=True)
 	
-	is_active = models.BooleanField(default=False)  # set to True after confirming email
+	is_active = models.BooleanField(default=True)  # set default to False, then to True after confirming email
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
 	

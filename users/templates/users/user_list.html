@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Users{% endblock title %}
+{% block content %}
+
+	<div>
+		<table>
+			<tr>
+				<th>username</th>
+				<th>first</th>
+				<th>last</th>
+				<th>location</th>
+				<th>instructor</th>
+			</tr>
+			{% for profile in profiles %}
+				<tr>
+					<td>{{ profile.user.username }}</td>
+					<td>{{ profile.first }}</td>
+					<td>{{ profile.last }}</td>
+					<td>{{ profile.location }}</td>
+					<td>
+						{% if profile.is_instructor %}
+							Yes
+						{% else %}
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+{% endblock %}

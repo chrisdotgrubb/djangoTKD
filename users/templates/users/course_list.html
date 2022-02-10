@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Courses{% endblock title %}
+{% block content %}
+
+	<div>
+		<table>
+			<tr>
+				<th>name</th>
+				<th>time</th>
+				<th>ages</th>
+				<th>cost</th>
+				<th>description</th>
+				<th>instructor</th>
+			</tr>
+			{% for course in courses %}
+				<tr>
+					<td>{{ course.name }}</td>
+					<td>{{ course.time }}</td>
+					<td>{{ course.ages }}</td>
+					<td>{{ course.cost }}/{{ course.billing }}</td>
+					<td>{{ course.description }}</td>
+					<td>get instructors</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+{% endblock %}
