@@ -1,16 +1,50 @@
+{% load static %}
 <header>
 	<div>
-		<ul>
-			<li style="display: inline-block;">navigation</li>
-			<li style="display: inline-block;"><a href="{% url 'index' %}">index</a></li>
-			<li style="display: inline-block;"><a href="{% url 'users:user-list' %}">users</a></li>
-			<li style="display: inline-block;"><a href="{% url 'courses' %}">courses</a></li>
+		<ul style="display: flex; border-bottom: darkgray; border-bottom-style: solid">
+			<li class="left">
+				<a href="https://maps.google.com/?cid=17255987814215067691" target="_blank">
+					<img src="{% static 'images/google_places.webp' %}" alt="Google Places">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.facebook.com/search/top?q=young%27s%20tae%20kwon%20do" target="_blank">
+					<img src="{% static 'images/facebook.webp' %}" alt="Facebook">
+				</a>
+			</li>
+			<li>
+				<a href="https://www.instagram.com/youngs.tkd.bellefonte/" target="_blank">
+					<img src="{% static 'images/instagram.webp' %}" alt="Instagram">
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<ul style="display: flex">
+			<li>
+				<a href="{% url 'index' %}">
+					<img src="{% static 'images/tkd_logo.webp' %}" alt="TKD logo">
+				</a>
+			</li>
+			<li>
+				<a href="{% url 'index' %}">
+					<p class="large">Young's Tae Kwon Do</p>
+				</a>
+				<p>Get started on your martial arts journey today!</p>
+			</li>
+			<li class="left"><a href="{% url 'index' %}">Home</a></li>
+			<li><a href="#">Contact Us</a></li>
+			<li><a href="{% url 'courses' %}">Classes</a></li>
+			<li><a href="{% url 'index' %}">FAQ</a></li>
+			<li><a href="{% url 'index' %}">About</a></li>
+			<li><a href="{% url 'index' %}">Other Services</a></li>
 			{% if user.is_authenticated %}
-				<li style="display: inline-block;"><a href="{% url 'users:profile' %}">profile</a></li>
-				<li style="display: inline-block;"><a href="{% url 'logout' %}">logout</a></li>
+				<li><a href="{% url 'users:user-list' %}">Users</a></li>
+				<li><a href="{% url 'users:profile' %}">My Profile</a></li>
+				<li><a href="{% url 'logout' %}">Logout</a></li>
 			{% else %}
-				<li style="display: inline-block;"><a href="{% url 'signup' %}">sign up</a></li>
-				<li style="display: inline-block;"><a href="{% url 'login' %}">login</a></li>
+				<li><a href="{% url 'login' %}">Login</a></li>
+				<li><a href="{% url 'signup' %}">Sign Up</a></li>
 			{% endif %}
 		</ul>
 	</div>

@@ -1,7 +1,65 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-	<h1>
-		index
-	</h1>
+	<div>
+		<div>
+			<img class="center" src="{% static 'images/main_logo.webp' %}" alt="WebsiteMain2022">
+		</div>
+		<div style="display: flex">
+			<div>
+				<img class="adjust" src="{% static 'images/971821_431bdd60de334f88904d8e8982bbc2a9_mv2.webp' %}" alt="Martial Arts Class in Progress">
+			</div>
+			<div>
+				<img class="adjust" src="{% static 'images/971821_26c4daf4895d4f71b2bacc25329df9c6_mv2.webp' %}" alt="Martial Arts Class in Progress">
+			</div>
+		</div>
+		<div style="display: flex">
+			<div>
+				<p>Contact Us Today!</p>
+				<p>219 W High St, Bellefonte, PA 16823</p>
+				<p>YoungsTKDbellefonte@Gmail.com</p>
+				<p>(814) 355-2250 (Call or Text)</p>
+				<div>
+					<ul style="display: flex; border-bottom: darkgray; border-bottom-style: solid">
+						<li class="left">
+							<a href="https://maps.google.com/?cid=17255987814215067691" target="_blank">
+								<img src="{% static 'images/google_places.webp' %}" alt="Google Places">
+							</a>
+						</li>
+						<li>
+							<a href="https://www.facebook.com/search/top?q=young%27s%20tae%20kwon%20do" target="_blank">
+								<img src="{% static 'images/facebook.webp' %}" alt="Facebook">
+							</a>
+						</li>
+						<li>
+							<a href="https://www.instagram.com/youngs.tkd.bellefonte/" target="_blank">
+								<img src="{% static 'images/instagram.webp' %}" alt="Instagram">
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<form action="">
+						form stuff
+						Name
+						Enter your name
+						Email
+						Enter your email
+						Subject
+						Type the subject
+						Message
+						Type your message here...
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+			</div>
+			<div>
+				<img src="{% static 'images/11062b_637c206a2006498e9049e714681c009a_mv2.webp' %}" alt="Martial Arts Class in Progress">
+			</div>
+		</div>
+		<div>
+			map
+		</div>
+	</div>
 {% endblock %}

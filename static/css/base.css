@@ -1,0 +1,61 @@
+*, html {
+	margin: 0;
+	padding: 0;
+	background-color: black;
+}
+
+div {
+	padding: .3rem;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+
+li {
+	display: inline-block;
+	margin: auto .3rem;
+	padding: 1rem 0;
+	color: white;
+	white-space: nowrap;
+}
+
+p {
+	color: white;
+	font-family: Helvetica, serif;
+	font-size: .8rem;
+	white-space: nowrap;
+}
+
+a:link {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	color: palegoldenrod;
+	text-decoration: none;
+}
+
+.left {
+	margin: auto .3rem auto auto;
+}
+
+p.large {
+	font-size: 1.5rem;
+}
+
+p.center {
+	text-align: center;
+}
+
+div.bigpad {
+	padding: 2rem;
+}
+
+img.center {
+	display: block;
+	margin: auto;
+}
+img.adjust {
+	width: 800px;
+}
