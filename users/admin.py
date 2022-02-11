@@ -1,3 +1,4 @@
+from django.contrib.admin import RelatedOnlyFieldListFilter, EmptyFieldListFilter
 from django.shortcuts import reverse
 from django.contrib import admin
 from django.contrib.auth import get_user_model
@@ -15,7 +16,7 @@ class InLineUserProfile(admin.StackedInline):
 class UserAdminConfig(UserAdmin):
 	inlines = [InLineUserProfile]
 	search_fields = ('email', 'username')
-	list_filter = ('is_active', 'is_staff', 'is_superuser')
+	list_filter = ('is_active', 'is_staff', 'is_superuser', ('last_login', EmptyFieldListFilter))
 	ordering = ('-created',)
 	list_display = ('username', 'email', 'created', 'last_login', 'is_active', 'is_staff', 'is_superuser')
 	
@@ -26,7 +27,7 @@ class UserAdminConfig(UserAdmin):
 
 class UserProfileAdminConfig(admin.ModelAdmin):
 	search_fields = ('first', 'last', 'phone', 'location')
-	list_filter = ('is_instructor',)
+	list_filter = ('is_instructor', ('phone', EmptyFieldListFilter))
 	ordering = ('-updated',)
 	list_display = ('first', 'last', 'user_link', 'phone', 'location', 'updated', 'get_is_active')  # , 'user_link', 'get_is_active'
 	
@@ -55,11 +56,12 @@ class CourseAdminConfig(admin.ModelAdmin):
 	search_fields = ('name', 'time', 'ages', 'instructor__first')
 	list_display = ('name', 'time', 'ages', 'cost', 'billing', 'get_instructors')
 	ordering = ('name',)
-	list_filter = ('cost', 'billing', 'instructor__last')
+	list_filter = ('cost', 'billing', ('instructor', RelatedOnlyFieldListFilter))
 	filter_horizontal = ('instructor',)
 	
+	# noinspection PyMethodMayBeStatic
 	def get_instructors(self, obj):
-		return ", ".join([i.first for i in obj.instructor.all()])  # not really recommended because of all the extra queries, but should work since db is small
+		return ", ".join([i.last for i in obj.instructor.all()])  # not really recommended because of all the extra queries, but should work since db is small
 
 
 admin.site.register(User, UserAdminConfig)

@@ -86,4 +86,4 @@ class Course(models.Model):
 	billing = models.CharField(max_length=16, choices=(('WEEK', 'WEEK'), ('MONTH', 'MONTH'), ('YEAR', 'YEAR'), ('ONCE', 'ONCE')), default='MONTH')
 	description = models.CharField(max_length=256, default='DESCRIPT')
 	
-	instructor = models.ManyToManyField(UserProfile, related_name='instructor')
+	instructor = models.ManyToManyField(UserProfile, related_name='instructor', limit_choices_to={'is_instructor': True})
