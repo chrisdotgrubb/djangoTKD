@@ -29,11 +29,11 @@ class UserProfileAdminConfig(admin.ModelAdmin):
 	list_filter = ('is_instructor',)
 	ordering = ('-updated',)
 	list_display = ('first', 'last', 'user_link', 'phone', 'location', 'updated', 'get_is_active')  # , 'user_link', 'get_is_active'
-	# readonly_fields = ('first',)
 	
 	fieldsets = (
-		(None, {'fields': ('user', 'first', 'last', 'phone', 'location', 'about')}),
+		(None, {'fields': ('user', 'first', 'last', 'phone', 'location', 'about', 'slug')}),
 		('Permissions', {'fields': ('is_instructor',)}))
+	readonly_fields = ('slug',)
 	
 	def get_username(self, obj):
 		return obj.user.username

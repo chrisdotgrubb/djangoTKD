@@ -27,7 +27,6 @@ class UserProfileModelForm(forms.ModelForm):
 			'phone',
 			'about',
 			'location',
-			'slug',  # remove and make auto
 		)
 
 

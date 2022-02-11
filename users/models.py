@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _  # i think this is right, but need to test it
+from django.utils.text import slugify
 
 
 class MyUserManager(BaseUserManager):
@@ -54,8 +55,24 @@ class UserProfile(models.Model):
 	location = models.CharField(max_length=50, null=True, blank=True)
 	
 	updated = models.DateTimeField(auto_now=True)
-	slug = models.SlugField(max_length=50)
+	slug = models.SlugField(max_length=50, null=True, blank=True)
 	is_instructor = models.BooleanField(default=False)
+	
+	
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			slug = slugify(self.user.username)
+			check = UserProfile.objects.filter(slug=slug)
+			if check:
+				while check:
+					slug = f'{slug}-{UserProfile.objects.filter(slug__startswith=slug).count()}'
+					check = UserProfile.objects.filter(slug=slug)
+					continue
+				self.slug = slug
+			else:
+				self.slug = slug
+		super().save(*args, **kwargs)
+	
 	
 	def __str__(self):
 		return f'{self.first} {self.last}'

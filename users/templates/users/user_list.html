@@ -13,7 +13,7 @@
 			</tr>
 			{% for profile in profiles %}
 				<tr>
-					<td><a href="{% url 'users:user-profile' profile.id %}">{{ profile.user.username }}</a></td>
+					<td><a href="{% url 'users:user-profile' profile.slug %}">{{ profile.user.username }}</a></td>
 					<td>{{ profile.first }}</td>
 					<td>{{ profile.last }}</td>
 					<td>{{ profile.location }}</td>

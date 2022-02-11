@@ -5,11 +5,11 @@
 {% block content %}
 	<div>
 		<div>
-			<h2>{{ object.username }}</h2>
-			<h2>{{ object.profile.first }}</h2>
-			<h2>{{ object.profile.last }}</h2>
-			<h2>{{ object.profile.about }}</h2>
-			<h2>{{ object.profile.location }}</h2>
+			<h2>{{ object }}</h2>
+			<h2>{{ object.first }}</h2>
+			<h2>{{ object.last }}</h2>
+			<h2>{{ object.about }}</h2>
+			<h2>{{ object.location }}</h2>
 		</div>
 		<div>
 			<a href="{% url 'users:profile' %}">my private profile</a>
