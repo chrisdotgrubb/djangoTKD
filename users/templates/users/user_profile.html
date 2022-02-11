@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
-
+{% block title %}
+	{% if object.first %}
+	{{ object.first }}'s Profile |
+	{% else %}
+	{{ object.user.username }}'s Profile |
+	{% endif %}
+{% endblock %}
 {% block content %}
 	<div>
 		<div>

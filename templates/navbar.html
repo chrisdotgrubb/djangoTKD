@@ -33,11 +33,11 @@
 				<p>Get started on your martial arts journey today!</p>
 			</li>
 			<li class="left"><a href="{% url 'index' %}">Home</a></li>
-			<li><a href="#">Contact Us</a></li>
+			<li><a href="{% url 'index' %}#contact">Contact Us</a></li>
 			<li><a href="{% url 'courses' %}">Classes</a></li>
-			<li><a href="{% url 'index' %}">FAQ</a></li>
-			<li><a href="{% url 'index' %}">About</a></li>
-			<li><a href="{% url 'index' %}">Other Services</a></li>
+			<li><a href="{% url 'faq' %}">FAQ</a></li>
+			<li><a href="{% url 'about' %}">About</a></li>
+			<li><a href="{% url 'other-services' %}">Other Services</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'users:user-list' %}">Users</a></li>
 				<li><a href="{% url 'users:profile' %}">My Profile</a></li>

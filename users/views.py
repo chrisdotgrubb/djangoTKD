@@ -18,6 +18,18 @@ class HomeView(generic.TemplateView):
 	template_name = 'index.html'
 
 
+class FAQView(generic.TemplateView):
+	template_name = 'faq.html'
+
+
+class AboutView(generic.TemplateView):
+	template_name = 'about.html'
+
+
+class OtherServicesView(generic.TemplateView):
+	template_name = 'other_services.html'
+
+
 class UserProfileListView(generic.ListView):
 	template_name = 'users/user_list.html'
 	queryset = UserProfile.objects.all()

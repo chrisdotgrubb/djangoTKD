@@ -8,21 +8,24 @@
 		</div>
 		<div style="display: flex">
 			<div>
-				<img class="adjust" src="{% static 'images/971821_431bdd60de334f88904d8e8982bbc2a9_mv2.webp' %}" alt="Martial Arts Class in Progress">
+				<img class="adjust" src="{% static 'images/971821_431bdd60de334f88904d8e8982bbc2a9_mv2.webp' %}"
+					 alt="Martial Arts Class in Progress">
 			</div>
 			<div>
-				<img class="adjust" src="{% static 'images/971821_26c4daf4895d4f71b2bacc25329df9c6_mv2.webp' %}" alt="Martial Arts Class in Progress">
+				<img class="adjust" src="{% static 'images/971821_26c4daf4895d4f71b2bacc25329df9c6_mv2.webp' %}"
+					 alt="Martial Arts Class in Progress">
 			</div>
 		</div>
-		<div style="display: flex">
-			<div>
-				<p>Contact Us Today!</p>
-				<p>219 W High St, Bellefonte, PA 16823</p>
-				<p>YoungsTKDbellefonte@Gmail.com</p>
-				<p>(814) 355-2250 (Call or Text)</p>
-				<div>
-					<ul style="display: flex; border-bottom: darkgray; border-bottom-style: solid">
-						<li class="left">
+		<div id="contact">
+			<div style="display: flex">
+				<div class="bigpad">
+					<p class="huge left">Contact Us Today!</p>
+					<p class="left">219 W High St, Bellefonte, PA 16823</p>
+					<p class="left">YoungsTKDbellefonte@Gmail.com</p>
+					<p class="left">(814) 355-2250 (Call or Text)</p>
+
+					<ul style="display: flex;">
+						<li>
 							<a href="https://maps.google.com/?cid=17255987814215067691" target="_blank">
 								<img src="{% static 'images/google_places.webp' %}" alt="Google Places">
 							</a>
@@ -38,28 +41,53 @@
 							</a>
 						</li>
 					</ul>
-				</div>
-				<div>
+
+
 					<form action="">
-						form stuff
-						Name
-						Enter your name
-						Email
-						Enter your email
-						Subject
-						Type the subject
-						Message
-						Type your message here...
-						<button type="submit">Submit</button>
+						<div class="formdiv">
+							<div>
+								<label for="name">Name *</label>
+							</div>
+							<div>
+								<input type="text" id="name" placeholder="Enter your name" style="width: 100%">
+							</div>
+							<div>
+								<label for="email">Email *</label>
+							</div>
+							<div>
+								<input type="email" id="email" placeholder="Enter your email">
+							</div>
+							<div>
+								<label for="subject">Subject:</label>
+							</div>
+							<div>
+								<input type="text" id="subject" placeholder="Type the subject">
+							</div>
+							<div>
+								<label for="message">Message:</label>
+							</div>
+							<div>
+								<input type="text" id="message" placeholder="Type your message here...">
+							</div>
+						</div>
+						<div style="display: flex; height: 50px">
+							<button type="submit" style="margin-left: auto; width: 150px; background-color: darkgray">
+								Submit
+							</button>
+						</div>
 					</form>
 				</div>
-			</div>
-			<div>
-				<img src="{% static 'images/11062b_637c206a2006498e9049e714681c009a_mv2.webp' %}" alt="Martial Arts Class in Progress">
+				<div>
+					<img src="{% static 'images/11062b_637c206a2006498e9049e714681c009a_mv2.webp' %}"
+						 alt="Martial Arts Class in Progress">
+				</div>
 			</div>
 		</div>
-		<div>
-			map
+		<div style="display: flex">
+			<span style="margin: auto">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3015.187298461366!2d-77.78259468458894!3d40.9116389793107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xef79957daac2282b!2sYoung&#39;s%20School%20of%20Tae%20Kwon%20DO!5e0!3m2!1sen!2sus!4v1644611610712!5m2!1sen!2sus"
+						width="900" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+			</span>
 		</div>
 	</div>
 {% endblock %}

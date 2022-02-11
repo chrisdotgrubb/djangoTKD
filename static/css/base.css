@@ -9,6 +9,8 @@ div {
 	margin-left: auto;
 	margin-right: auto;
 	width: 90%;
+	background-color: black;
+
 }
 
 li {
@@ -24,6 +26,22 @@ p {
 	font-family: Helvetica, serif;
 	font-size: .8rem;
 	white-space: nowrap;
+}
+
+label {
+	color: darkgray;
+}
+
+input {
+	width: 100%;
+	border: solid darkgray 1px;
+	padding: .3rem;
+	margin: .5rem 0;
+}
+form div {
+	margin-left: 0;
+	padding-left: 0;
+	width: 100%;
 }
 
 a:link {
@@ -44,8 +62,17 @@ p.large {
 	font-size: 1.5rem;
 }
 
+p.huge {
+	font-size: 3rem;
+	font-weight: bold;
+}
+
 p.center {
 	text-align: center;
+}
+
+p.left {
+	text-align: left;
 }
 
 div.bigpad {
@@ -58,4 +85,8 @@ img.center {
 }
 img.adjust {
 	width: 800px;
+}
+
+.bigpad p {
+	padding-top: 1rem;
 }
