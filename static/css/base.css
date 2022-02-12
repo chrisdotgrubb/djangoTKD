@@ -9,7 +9,7 @@ div {
 	margin-left: auto;
 	margin-right: auto;
 	width: 90%;
-	background-color: black;
+	background-color: gold;
 
 }
 
@@ -26,10 +26,16 @@ p {
 	font-family: Helvetica, serif;
 	font-size: .8rem;
 	white-space: nowrap;
+	opacity: .8;
+}
+
+span {
+	opacity: .8;
 }
 
 label {
 	color: darkgray;
+	opacity: .8;
 }
 
 input {
@@ -38,7 +44,8 @@ input {
 	padding: .3rem;
 	margin: .5rem 0;
 }
-form div {
+
+#contactform div {
 	margin-left: 0;
 	padding-left: 0;
 	width: 100%;
@@ -83,10 +90,88 @@ img.center {
 	display: block;
 	margin: auto;
 }
+
 img.adjust {
 	width: 800px;
 }
 
 .bigpad p {
 	padding-top: 1rem;
+}
+
+#faq_div_center span {
+	color: white;
+	display: block;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	font-size: 2rem;
+	font-weight: bolder;
+	background-color: transparent;
+}
+
+#faq_div_center p {
+	color: white;
+	text-align: center;
+	font-size: 1.2rem;
+	background-color: transparent;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#faq_div_left span {
+	color: white;
+	display: block;
+	text-align: left;
+	margin-top: 35px;
+	margin-bottom: 10px;
+	font-size: 1.2rem;
+	background-color: transparent;
+}
+
+#faq_div_left p {
+	color: white;
+	text-align: left;
+	font-size: 1.2rem;
+	background-color: transparent;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#faq_div_left ol {
+	color: white;
+	display: block;
+	text-align: left;
+	background-color: transparent;
+}
+
+#faq_div_left li {
+	color: white;
+	display: list-item;
+	text-align: left;
+	white-space: normal;
+	font-size: 1.2rem;
+	background-color: transparent;
+	margin-left: 40px;
+	margin-right: 20px;
+	list-style: number;
+}
+
+.faq_left span {
+	color: white;
+	text-align: left;
+	white-space: normal;
+	background-color: transparent;
+}
+
+.faq_left p {
+	color: white;
+	white-space: normal;
+	background-color: transparent;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#faq_div_center div {
+	background-color: transparent;
 }

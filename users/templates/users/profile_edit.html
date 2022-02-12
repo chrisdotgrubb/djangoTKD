@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}Edit My Profile |{% endblock %}
 
 {% block content %}
 	<form action="" method="POST">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{ form|crispy }}
 		<button type="submit">Submit</button>
 		<a href="{% url 'users:profile' %}">
 			<button type="button">Cancel</button>
