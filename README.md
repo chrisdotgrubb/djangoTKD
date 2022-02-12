@@ -6,7 +6,7 @@ Download this project
   3. extract zip somewhere, probably with your other projects
 
 
-To set up django-
+To set up django
   4. go to the terminal in your project
   5. create python virtual env
   6. pip install -r requirements.txt
