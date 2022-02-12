@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}About |{% endblock %}
 
 {% block content %}
@@ -8,66 +8,80 @@
 
 		<div>
 
-			<div style="text-align: center";>
-				<span style="color: white; opacity: .8; background-color: transparent">about us</span>
+			<div style="text-align: center;">
+				<span>About Us</span>
 			</div>
 
 			<div>
-				<div style="color: white; opacity: .8; background-color: transparent">The study of Tae Kwon Do (art of foot and hand) is an undertaking that offers both physical and mental
-				rewards. We have six tenets upon which we base our training: modesty, perseverance, self control,
-				indomitable spirit, courtesy and integrity. All classes are taught by certified Black Belt
-				instructors.</div>
-				<div style="color: white; opacity: .8; background-color: transparent">Young’s Tae Kwon Do is the regional headquarters for the <span style="color: white; opacity: .8; background-color: transparent">International Chin Mu Kwan Tae Kwon Do
-				federation</span> which has schools and instructors all around the world. This federation was founded by 9th
-				degree Black Belt Grand Master Yon Ho Kang. The Pennsylvania headquarters is located in Conshohocken and
-				is run by 9th degree Black Belt, Grand Master Fred DeStolfo (Grand Master Young’s instructor). PA branch
-				schools are located in Bellefonte, Danville, Selinsgrove, Blairsville, Norristown, Huntington, Halifax,
-				Altoona, Coudersport , and Glenmoore. Any Young’s students may travel to any branch school and be
-				welcomed with open arms.</div>
+				<div>The study of Tae Kwon Do (art of
+					foot and hand) is an undertaking that offers both physical and mental
+					rewards. We have six tenets upon which we base our training: modesty, perseverance, self control,
+					indomitable spirit, courtesy and integrity. All classes are taught by certified Black Belt
+					instructors.
+				</div>
+				<div>Young’s Tae Kwon Do is the
+					regional headquarters for the <span>International Chin Mu Kwan Tae Kwon Do
+				federation</span> which has schools and instructors all around the world. This federation was founded by
+					9th
+					degree Black Belt Grand Master Yon Ho Kang. The Pennsylvania headquarters is located in Conshohocken
+					and
+					is run by 9th degree Black Belt, Grand Master Fred DeStolfo (Grand Master Young’s instructor). PA
+					branch
+					schools are located in Bellefonte, Danville, Selinsgrove, Blairsville, Norristown, Huntington,
+					Halifax,
+					Altoona, Coudersport , and Glenmoore. Any Young’s students may travel to any branch school and be
+					welcomed with open arms.
+				</div>
 			</div>
 		</div>
 
 		<div>
-			<p>full size pic</p>
+			<img src="{% static 'images/11062b_660ab66366b24a29bcb1212876d0a740_mv2.webp' %}"
+				 alt="Martial Arts Training">
 		</div>
 
 		<div style="display: flex">
 
 			<div style="width: 50%">
-				left side
 				<div>
-					text boxes
+					<div>
+						<div>Chin Mu Kwan Federation</div>
+						<div>Chin Mu Kwan literally means “True Martial Art Home” the art of Taekwon-Do as a self defense.</div>
+						<div>We do the Chang Hon (Blue Cottage) forms, we do the original set of forms which has Ko-Dang at 4th degree, we do not do the form Juche. Consult the CTF Rules and Regulations for order of forms. The various TKD forms CD’s and books are for reference only and are not a replacement for a certified CTF instructor.</div>
+						<div>Chin Mu Kwan Taekwon-Do became a Federation (CTF) in 1966 around the same time the International Taekwon-Do Federation  (ITF) was formed. CTF is dedicated to promoting traditional Taekwon-Do, to maintain the highest standards and certifications in Taekwon-Do.</div>
+					</div>
 				</div>
 			</div>
 			<div style="width: 50%">
-				right side picture
+				<img src="{% static 'images/971821_c1aa866a16534537b85d5a4afc7aefb0_mv2.webp' %}" alt="CTFLogo.jpg">
 			</div>
 
 		</div>
 
-		<div>
+		<div style="display: flex">
 
-			<div>
-				left side pic
+			<div style="width: 50%">
+				<img src="{% static 'images/971821_65241041e36f42759f5f8c0f74388f7b_mv2.webp' %}" alt="school.jpg">
 			</div>
-			<div>
+			<div style="width: 50%">
 				<div>
-					right side text boxes youngs tkd
+					<div>Young's TKD in Bellefonte</div>
+					<div>Young's TKD was founded in 1980 by Michael Young. Since then, we have grown and added many more members and martial arts groups to our school.  Young's TKD prides it's self on being an active part of the Bellefonte community.  We also hold a twice yearly tournament at the Bellefonte High School in the spring and fall.</div>
 				</div>
 			</div>
 
 		</div>
 
-		<div>
+		<div style="display: flex">
 
-			<div>
-				left side
+			<div style="width: 50%">
 				<div>
-					text boxes instructors
+					<div>Instructors</div>
+					<div>The three main instructors at Young's TKD are Grand Master Young (9th Degree), Sensei/Master Cramer (6th Degree), and Master Rogosky (5th Degree).  There are also many other students who have earned their black belts and master instructor degrees through our federation.</div>
 				</div>
 			</div>
-			<div>
-				right side picture
+			<div style="width: 50%">
+				<img src="{% static 'images/971821_f253cd8e127e4d19945413606ea1160e_mv2.webp' %}" alt="2013-12-14 12.19.28.jpg">
 			</div>
 
 		</div>

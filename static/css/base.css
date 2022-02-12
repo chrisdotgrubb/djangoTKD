@@ -9,7 +9,7 @@ div {
 	margin-left: auto;
 	margin-right: auto;
 	width: 90%;
-	background-color: gold;
+	background-color: black;
 
 }
 
@@ -157,6 +157,18 @@ img.adjust {
 	list-style: number;
 }
 
+.about_div div{
+	color: white;
+	opacity: .8;
+	background-color: transparent;
+}
+
+.about_div span{
+	color: white;
+	opacity: .8;
+	background-color: transparent;
+}
+
 .faq_left span {
 	color: white;
 	text-align: left;
@@ -175,3 +187,4 @@ img.adjust {
 #faq_div_center div {
 	background-color: transparent;
 }
+
