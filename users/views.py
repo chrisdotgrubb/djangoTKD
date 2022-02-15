@@ -1,9 +1,9 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponse
 from django.views import generic
-from .models import UserProfile, Course, MyUser
-from .forms import UserProfileModelForm, CustomUserCreationForm, CustomUserUpdateForm, UserProfileUpdateModelForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import UserProfile, Course, MyUser, ContactUs
+from .forms import UserProfileModelForm, CustomUserCreationForm, CustomUserUpdateForm, UserProfileUpdateModelForm, ContactUsForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class SignupView(generic.CreateView):
@@ -14,8 +14,12 @@ class SignupView(generic.CreateView):
 		return reverse('login')
 
 
-class HomeView(generic.TemplateView):
+class HomeView(generic.CreateView):
 	template_name = 'index.html'
+	form_class = ContactUsForm
+	
+	def get_success_url(self):
+		return reverse('index')
 
 
 class FAQView(generic.TemplateView):
@@ -70,3 +74,10 @@ class CourseListView(generic.ListView):
 	template_name = 'users/course_list.html'
 	queryset = Course.objects.all()
 	context_object_name = 'courses'
+
+class ContactUsMessagesView(UserPassesTestMixin, generic.ListView):
+	template_name = 'contact_us_messages.html'
+	queryset = ContactUs.objects.all()
+	
+	def test_func(self):
+		return self.request.user.is_superuser

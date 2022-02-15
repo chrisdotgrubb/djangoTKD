@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us Messages|{% endblock %}
+
+{% block content %}
+<div>
+		<table>
+			<tr>
+				<th>name</th>
+				<th>email</th>
+				<th>subject</th>
+				<th>message</th>
+				<th>created</th>
+			</tr>
+				{% for object in object_list %}
+				<tr>
+					<td>{{ object.name }}</td>
+					<td>{{ object.email }}</td>
+					<td>{{ object.subject }}</td>
+					<td>{{ object.message }}</td>
+					<td>{{ object.created }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock content %}

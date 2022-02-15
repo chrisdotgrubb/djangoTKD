@@ -87,3 +87,11 @@ class Course(models.Model):
 	description = models.CharField(max_length=256, default='DESCRIPT')
 	
 	instructor = models.ManyToManyField(UserProfile, related_name='instructor', limit_choices_to={'is_instructor': True})
+
+
+class ContactUs(models.Model):
+	name = models.CharField(max_length=64)
+	email = models.EmailField(max_length=255)
+	subject = models.CharField(max_length=255, null=True, blank=True)
+	message = models.CharField(max_length=1000, null=True, blank=True)
+	created = models.DateTimeField(auto_now_add=True)

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.forms.models import inlineformset_factory
-from .models import MyUser, UserProfile
+from .models import MyUser, UserProfile, ContactUs
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -39,4 +39,15 @@ class UserProfileUpdateModelForm(forms.ModelForm):
 			'phone',
 			'about',
 			'location',
+		)
+
+
+class ContactUsForm(forms.ModelForm):
+	class Meta:
+		model = ContactUs
+		fields = (
+			'name',
+			'email',
+			'subject',
+			'message',
 		)

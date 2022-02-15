@@ -78,7 +78,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -101,7 +101,6 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 #todo add personal user messaging
 #todo add forum
 #todo settings to make profile fields public or private
-#todo contact-us message functionality
 #todo add picture to profile
 
 #todo admin templates

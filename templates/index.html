@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 	<div>
@@ -43,32 +44,10 @@
 					</ul>
 
 
-					<form action="" id="contactform">
+					<form method="POST" id="contactform">
 						<div>
-							<div>
-								<label for="name">Name *</label>
-							</div>
-							<div>
-								<input type="text" id="name" placeholder="Enter your name" style="width: 100%">
-							</div>
-							<div>
-								<label for="email">Email *</label>
-							</div>
-							<div>
-								<input type="email" id="email" placeholder="Enter your email">
-							</div>
-							<div>
-								<label for="subject">Subject:</label>
-							</div>
-							<div>
-								<input type="text" id="subject" placeholder="Type the subject">
-							</div>
-							<div>
-								<label for="message">Message:</label>
-							</div>
-							<div>
-								<input type="text" id="message" placeholder="Type your message here...">
-							</div>
+						{% csrf_token %}
+						{{ form|crispy }}
 						</div>
 						<div style="display: flex; height: 50px">
 							<button type="submit" style="margin-left: auto; width: 150px; background-color: darkgray">
@@ -91,3 +70,31 @@
 		</div>
 	</div>
 {% endblock %}
+
+
+{#<div>#}
+{#	<div>#}
+{#		<label for="name">Name *</label>#}
+{#	</div>#}
+{#	<div>#}
+{#		<input type="text" id="name" placeholder="Enter your name" style="width: 100%">#}
+{#	</div>#}
+{#	<div>#}
+{#		<label for="email">Email *</label>#}
+{#	</div>#}
+{#	<div>#}
+{#		<input type="email" id="email" placeholder="Enter your email">#}
+{#	</div>#}
+{#	<div>#}
+{#		<label for="subject">Subject:</label>#}
+{#	</div>#}
+{#	<div>#}
+{#		<input type="text" id="subject" placeholder="Type the subject">#}
+{#	</div>#}
+{#	<div>#}
+{#		<label for="message">Message:</label>#}
+{#	</div>#}
+{#	<div>#}
+{#		<input type="text" id="message" placeholder="Type your message here...">#}
+{#	</div>#}
+{#</div>#}
