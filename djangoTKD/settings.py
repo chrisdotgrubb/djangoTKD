@@ -93,3 +93,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
+
+
+#todo set up crispy forms
+#todo finish styling, probably will switch to tailwind
+
+#todo add personal user messaging
+#todo add forum
+#todo settings to make profile fields public or private
+#todo contact-us message functionality
+#todo add picture to profile
+
+#todo admin templates
+#todo admin actions
+
+#todo email confirmation on signup
+#todo password recovery

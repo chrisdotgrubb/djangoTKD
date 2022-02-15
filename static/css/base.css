@@ -45,6 +45,37 @@ input {
 	margin: .5rem 0;
 }
 
+td {
+	color: white;
+	font-family: Helvetica, serif;
+	font-size: .8rem;
+	white-space: nowrap;
+	opacity: .8;
+}
+
+th {
+	color: white;
+	font-family: Helvetica, serif;
+	font-size: .8rem;
+	white-space: nowrap;
+	opacity: .8;
+}
+
+h2 {
+	color: white;
+	font-family: Helvetica, serif;
+	font-size: 2rem;
+	white-space: nowrap;
+	opacity: .8;
+}
+
+button {
+	color: green;
+	font-family: Helvetica, serif;
+	font-size: .8rem;
+	white-space: nowrap;
+	opacity: .8;
+}
 #contactform div {
 	margin-left: 0;
 	padding-left: 0;
