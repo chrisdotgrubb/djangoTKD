@@ -69,6 +69,13 @@ h2 {
 	opacity: .8;
 }
 
+input {
+	color: white;
+	font-family: Helvetica, serif;
+	white-space: nowrap;
+	opacity: .8;
+}
+
 button {
 	color: green;
 	font-family: Helvetica, serif;

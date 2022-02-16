@@ -1,8 +1,9 @@
-from django.shortcuts import render, reverse
+from django.db.models import Q
+from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse
 from django.views import generic
-from .models import UserProfile, Course, MyUser, ContactUs
-from .forms import UserProfileModelForm, CustomUserCreationForm, CustomUserUpdateForm, UserProfileUpdateModelForm, ContactUsForm
+from .models import UserProfile, Course, MyUser, ContactUs, DirectMessageThread, DirectMessage
+from .forms import UserProfileModelForm, CustomUserCreationForm, CustomUserUpdateForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageThreadForm, DirectMessageForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -81,3 +82,71 @@ class ContactUsMessagesView(UserPassesTestMixin, generic.ListView):
 	
 	def test_func(self):
 		return self.request.user.is_superuser
+	
+	
+class ThreadListView(LoginRequiredMixin, generic.View):
+	
+	def get(self, request, *args, **kwargs):
+		threads = DirectMessageThread.objects.filter(Q(user=request.user.profile) | Q(receiver=request.user.profile))
+		
+		context = {
+			'threads': threads,
+		}
+		
+		return render(request, 'users/inbox.html', context)
+	
+
+class ThreadCreateView(LoginRequiredMixin, generic.View):
+	
+	def get(self, request, *args, **kwargs):
+		form = DirectMessageThreadForm()
+		
+		context = {
+			'form': form,
+		}
+		
+		return render(request, 'users/create_thread.html', context)
+	
+	def post(self, request, *args, **kwargs):
+		form = DirectMessageThreadForm(request.POST)
+		
+		username = request.POST.get('username')
+		print(username)
+		try:
+			receiver = UserProfile.objects.get(user__username=username)
+			print(request.user)
+			# print(DirectMessageThread.objects.filter(user__user__username=receiver, receiver=request.user))
+			if DirectMessageThread.objects.filter(user__user__username=request.user, receiver=receiver).exists():
+				thread = DirectMessageThread.objects.filter(user__user__username=request.user, receiver=receiver)[0]
+				return redirect('thread', pk=thread.pk)
+			# elif DirectMessageThread.objects.filter(user__user__username=receiver, receiver=request.user).exists():
+			# 	thread = DirectMessageThread.objects.filter(user__user__username=receiver, receiver=request.user)[0]
+			# 	return redirect('thread', pk=thread.pk)
+			print(request.user)
+			if form.is_valid():
+				thread = DirectMessageThread(
+					user=request.user.profile,
+					receiver=receiver.user.profile,
+				)
+				thread.save()
+				return redirect('thread', pk=thread.pk)
+		except:
+			return redirect('users:create-thread')
+
+
+class ThreadView(LoginRequiredMixin, generic.View):
+	
+	def get(self, request, pk, *args, **kwargs):
+		form = DirectMessageForm()
+		thread = DirectMessageThread.objects.get(pk=pk)
+		message_list = DirectMessage.objects.filter(thread__pk__contains=pk)
+		context = {
+			'thread': thread,
+			'form': form,
+			'message_list': message_list,
+		}
+		
+		return render(request, 'users/thread.html', context)
+	
+	
+	

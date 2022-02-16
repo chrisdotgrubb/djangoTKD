@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block title %}{% endblock title %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div>
+				{% if thread.receiver == request.user %}
+					<h5>@{{ thread.user }}</h5>
+				{% else %}
+					<h5>@{{ thread.receiver }}</h5>
+				{% endif %}
+			</div>
+		</div>
+
+		{% if message_list.all.count == 0 %}
+		<div class="row">
+			<div>
+				<h3>No Messages</h3>
+			</div>
+		</div>
+		{% endif %}
+
+		{% for message in message_list %}
+		<div class="row">
+
+		</div>
+	</div>
+{% endblock content %}

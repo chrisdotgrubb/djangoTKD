@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+	<div class="container">
+
+		<div class="row">
+			<div><a href="{% url 'users:inbox' %}">Back to inbox.</a></div>
+		</div>
+
+		<div class="row">
+			<div>Start a Conversation.</div>
+		</div>
+
+		<div class="row">
+			<div>
+				<form method="POST">
+					{% csrf_token %}
+					<p>enter recipient</p>
+					{{ form|crispy }}
+					<button type="submit">Continue</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+{% endblock content %}

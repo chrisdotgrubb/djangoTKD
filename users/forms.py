@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.forms.models import inlineformset_factory
-from .models import MyUser, UserProfile, ContactUs
+from .models import MyUser, UserProfile, ContactUs, DirectMessage, DirectMessageThread
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -49,5 +49,17 @@ class ContactUsForm(forms.ModelForm):
 			'name',
 			'email',
 			'subject',
+			'message',
+		)
+
+
+class DirectMessageThreadForm(forms.Form):
+	username = forms.CharField(label='', max_length=32)
+
+
+class DirectMessageForm(forms.ModelForm):
+	class Meta:
+		model = DirectMessage
+		fields = (
 			'message',
 		)

@@ -95,3 +95,20 @@ class ContactUs(models.Model):
 	subject = models.CharField(max_length=255, null=True, blank=True)
 	message = models.CharField(max_length=1000, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
+
+
+class DirectMessageThread(models.Model):
+	user = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
+	receiver = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
+
+
+class DirectMessage(models.Model):
+	thread = models.ForeignKey(DirectMessageThread, related_name='thread', on_delete=models.CASCADE, blank=True)
+	
+	sender = models.ForeignKey(UserProfile, related_name='sender', on_delete=models.SET_NULL, null=True)
+	receiver = models.ForeignKey(UserProfile, related_name='receiver', on_delete=models.SET_NULL, null=True)
+	
+	message = models.CharField(max_length=1000, null=True, blank=True)
+	created = models.DateTimeField(auto_now_add=True)
+	is_read = models.BooleanField(default=False)
+	
