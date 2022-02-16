@@ -125,6 +125,10 @@ last_names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Mille
 		'Kelly', 'Howard', 'Ramos', 'Kim', 'Cox', 'Ward', 'Richardson', 'Watson', 'Brooks', 'Chavez', 'Wood', 'James', 'Bennet', 'Gray', 'Mendoza', 'Ruiz', 'Hughes', 'Price', 'Alvarez',
 		'Castillo', 'Sanders', 'Patel', 'Myers', 'Long', 'Ross', 'Foster', 'Jimenez']
 area_codes = ['814', '717', '570', '412', '484']
+belts = ['White', 'Yellow', 'Green', 'Brown', 'Blue', 'Red', 'Black']
+cities = ['Bellefonte', 'State College', 'Altoona', 'Pleasant Gap', 'Milesburg', 'Zion', 'Centre Hall', 'Boalsburg']
+
+
 
 def create_user(n):
 	for _ in range(n):
@@ -138,8 +142,8 @@ def create_user(n):
 		is_superuser = False
 		# user
 		phone = f'({random.choice(area_codes)}){random.randint(2, 9)}{random.randint(1, 9)}{random.randint(1, 9)}-{random.randint(1, 9)}{random.randint(1, 9)}{random.randint(1, 9)}{random.randint(1, 9)}'
-		about = f'Info about me. {random.choice(first_names)}, {random.choice(first_names)}, {random.choice(first_names)}.'
-		location = f'{random.choice(first_names)}'
+		about = f'{random.choices(belts, weights=(13, 20, 17, 25, 12, 8, 5), k=1)[0]} belt. {random.randint(7, 70)} years old.'
+		location = f'{random.choice(cities)}'
 		is_instructor = False
 		user = MyUser.objects.create(email=email, username=username, is_active=is_active, is_staff=is_staff, is_superuser=is_superuser)
 		user.set_password('a')

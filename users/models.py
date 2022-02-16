@@ -95,7 +95,11 @@ class ContactUs(models.Model):
 	subject = models.CharField(max_length=255, null=True, blank=True)
 	message = models.CharField(max_length=1000, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-
+	resolved = models.BooleanField(default=False)
+	
+	class Meta:
+		verbose_name_plural = 'Contact Us'
+		
 
 class DirectMessageThread(models.Model):
 	user = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)

@@ -3,7 +3,7 @@ from django.shortcuts import reverse
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread
+from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs
 from django.utils.safestring import mark_safe
 
 User = get_user_model()
@@ -64,6 +64,15 @@ class CourseAdminConfig(admin.ModelAdmin):
 		return ", ".join([i.last for i in obj.instructor.all()])  # not really recommended because of all the extra queries, but should work since db is small
 
 
+class ContactUsConfig(admin.ModelAdmin):
+	search_fields = ('name', 'email', 'subject', 'message', 'created')
+	list_display = ('name', 'email', 'subject', 'message', 'created', 'resolved')
+	list_filter = ('resolved',)
+	fields = ('name', 'email', 'subject', 'message', 'created', 'resolved')
+	readonly_fields = ('name', 'email', 'subject', 'message', 'created')
+	ordering = ('-created',)
+	
+
 class DirectMessageThreadConfig(admin.ModelAdmin):
 	list_display = ('user', 'receiver')
 
@@ -77,3 +86,4 @@ admin.site.register(UserProfile, UserProfileAdminConfig)
 admin.site.register(Course, CourseAdminConfig)
 admin.site.register(DirectMessageThread, DirectMessageThreadConfig)
 admin.site.register(DirectMessage, DirectMessageConfig)
+admin.site.register(ContactUs, ContactUsConfig)
