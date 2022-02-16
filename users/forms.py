@@ -54,7 +54,7 @@ class ContactUsForm(forms.ModelForm):
 
 
 class DirectMessageThreadForm(forms.Form):
-	username = forms.CharField(label='', max_length=32)
+	message = forms.CharField(label='message', max_length=1000)
 
 
 class DirectMessageForm(forms.ModelForm):
