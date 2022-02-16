@@ -98,56 +98,35 @@ class ThreadListView(LoginRequiredMixin, generic.View):
 		return render(request, 'users/inbox.html', context)
 
 
-class ThreadCreateView(LoginRequiredMixin, generic.View):
-	
-	def get(self, request, slug, *args, **kwargs):
-		form = DirectMessageThreadForm()
-		receiver = UserProfile.objects.filter(slug=slug)[0]
-		thread = DirectMessageThread.objects.filter(user=request.user.profile, receiver=receiver).first() or DirectMessageThread.objects.filter(user=receiver, receiver=request.user.profile).first()
-		if not thread:
-			context = {
-				'form': form,
-			}
-			return render(request, 'users/create_thread.html', context)
-		else:
-			return redirect('users:thread', slug)
-	
-	def post(self, request, slug, *args, **kwargs):
-		form = DirectMessageThreadForm(request.POST)
-		receiver = UserProfile.objects.filter(slug=slug)[0]
-		
-		if form.is_valid():
-			thread = DirectMessageThread(
-				user=request.user.profile,
-				receiver=receiver,
-			)
-			thread.save()
-			return redirect('users:thread', slug)
-		
-		return redirect('users:user-profile', slug)
-
-
 class ThreadView(LoginRequiredMixin, generic.View):
 	
 	def get(self, request, slug, *args, **kwargs):
 		form = DirectMessageForm()
 		receiver = UserProfile.objects.filter(slug=slug)[0]
 		thread = DirectMessageThread.objects.filter(user=request.user.profile, receiver=receiver).first() or DirectMessageThread.objects.filter(user=receiver, receiver=request.user.profile).first()
-		messages = DirectMessage.objects.filter(thread=thread)
-		context = {
-			'form': form,
-			'thread': thread,
-			'messages': messages,
-		}
-		
-		return render(request, 'users/thread.html', context)
+		if thread:
+			messages = DirectMessage.objects.filter(thread=thread)
+			context = {
+				'form': form,
+				'thread': thread,
+				'messages': messages,
+			}
+			
+			return render(request, 'users/thread.html', context)
+		else:
+			thread = DirectMessageThread(
+				user=request.user.profile,
+				receiver=receiver,
+			)
+			thread.save()
+			return redirect('users:thread', slug)
 	
 	def post(self, request, slug, *args, **kwargs):
 		form = DirectMessageForm(request.POST)
 		message = request.POST.get('message')
 		receiver = UserProfile.objects.filter(slug=slug)[0]
 		thread = DirectMessageThread.objects.filter(user=request.user.profile, receiver=receiver).first() or DirectMessageThread.objects.filter(user=receiver, receiver=request.user.profile).first()
-		messages = DirectMessage.objects.filter(thread=thread)
+		# messages = DirectMessage.objects.filter(thread=thread)
 		
 		if form.is_valid():
 			new_message = DirectMessage(

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserProfileListView, ProfileView, ProfileUpdateView, UserProfileDetailView, ThreadCreateView, ThreadView, ThreadListView
+from .views import UserProfileListView, ProfileView, ProfileUpdateView, UserProfileDetailView, ThreadView, ThreadListView
 
 app_name = 'users'
 
@@ -10,5 +10,4 @@ urlpatterns = [
 	path('profile/<slug:slug>/', UserProfileDetailView.as_view(), name='user-profile'),
 	path('inbox/', ThreadListView.as_view(), name='inbox'),
 	path('message/<slug:slug>/', ThreadView.as_view(), name='thread'),
-	path('message/<slug:slug>/create', ThreadCreateView.as_view(), name='create-thread'),
 ]

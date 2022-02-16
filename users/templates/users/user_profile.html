@@ -21,7 +21,7 @@
 		</div>
 		{% if not object.user.username == request.user.username %}
 			<div>
-				<a href="{% url 'users:create-thread' object.slug %}">Send {{ object.first }} a private message.</a>
+				<a href="{% url 'users:thread' object.slug %}">Send {{ object.first }} a private message.</a>
 			</div>
 		{% endif %}
 	</div>

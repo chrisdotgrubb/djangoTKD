@@ -17,10 +17,10 @@
 		{% for thread in threads %}
 			<div class="row">
 				<div>
-					{% if thread.user == request.user.profile %}
-						<a href="{% url 'users:thread' thread.receiver.slug %}"><h2>{{ thread.user }} - {{ thread.receiver }}</h2></a>
-					{% else %}
-						<a href="{% url 'users:thread' request.user.profile.slug %}"><h2>{{ thread.user }} - {{ thread.receiver }}</h2></a>
+					{% if thread.user.user.username == request.user.username %}
+						<a href="{% url 'users:thread' thread.receiver.slug %}"><h2>@{{ thread.receiver.user.username }} ({{ thread.receiver.first }})</h2></a>
+					{% elif thread.receiver.user.username == request.user.username %}
+						<a href="{% url 'users:thread' thread.user.user.profile.slug %}"><h2>@{{ thread.user.user.username }} ({{ thread.user.first }})</h2></a>
 					{% endif %}
 				</div>
 			</div>

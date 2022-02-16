@@ -7,9 +7,11 @@
 		<div class="row">
 			<div>
 				{% if thread.receiver == request.user.profile %}
-					<h2 style="color: coral">@{{ thread.user }}</h2>
+					<h2 style="color: coral">@{{ thread.user.user.username }}</h2>
+					<h25 style="color: coral">{{ thread.user }}</h25>
 				{% else %}
-					<h2 style="color: coral">@{{ thread.receiver }}</h2>
+					<h2 style="color: coral">@{{ thread.receiver.user.username }}</h2>
+					<h5 style="color: coral">{{ thread.receiver }}</h5>
 				{% endif %}
 			</div>
 		</div>
