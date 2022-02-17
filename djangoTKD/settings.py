@@ -106,7 +106,5 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 #todo add picture to profile
 
 #todo admin templates
-#todo admin actions
 
 #todo email confirmation on signup
-#todo password recovery
