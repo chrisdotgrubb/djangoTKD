@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from users.views import HomeView, CourseListView, SignupView, FAQView, AboutView, OtherServicesView, ContactUsMessagesView
+from users.views import HomeView, CourseListView, SignupView, FAQView, AboutView, OtherServicesView, ContactUsMessagesView, ForumView, ForumRoomCreateView, ForumRoomView
 from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
@@ -11,6 +11,9 @@ urlpatterns = [
 	path('other-services/', OtherServicesView.as_view(), name='other-services'),
 	path('users/', include('users.urls', namespace='users')),
 	path('courses/', CourseListView.as_view(), name='courses'),
+	path('forum/', ForumView.as_view(), name='forum'),
+	path('forum/room/create', ForumRoomCreateView.as_view, name='create-room'),
+	path('forum/room/<int:pk>', ForumRoomView.as_view(), name='room'),
 	path('contact-us-messages/', ContactUsMessagesView.as_view(), name='contact-us-messages'),
 	path('signup/', SignupView.as_view(), name='signup'),
 	path('login/', LoginView.as_view(), name='login'),

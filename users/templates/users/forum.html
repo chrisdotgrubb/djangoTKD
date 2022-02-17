@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Forum |{% endblock title %}
+
+{% block content %}
+	<div>
+		<div>
+			<a href="{% url 'create-room' %}"><h5>Create New Room</h5></a>
+			<br>
+		</div>
+		<div>
+			{% for room in rooms %}
+				<h2><a href="{% url 'room' room.id %}">{{ room.title }}</a></h2>
+				<p>{{ room.description }}</p>
+				<p>{{ room.created }}</p>
+				<br>
+			{% endfor %}
+		</div>
+		<div>
+			<h1 style="color: crimson">My Activity</h1>
+		</div>
+		<div>
+			{% for room in my_rooms %}
+				<h2><a href="{% url 'room' room.id %}">{{ room.title }}</a></h2>
+				<p>{{ room.description }}</p>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content %}

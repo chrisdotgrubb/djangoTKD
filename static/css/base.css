@@ -43,6 +43,16 @@ input {
 	border: solid darkgray 1px;
 	padding: .3rem;
 	margin: .5rem 0;
+	color: white;
+	font-family: Helvetica, serif;
+	opacity: .8;
+}
+
+textarea {
+	color: white;
+	font-family: Helvetica, serif;
+	font-size: .8rem;
+	opacity: .8;
 }
 
 td {
@@ -65,14 +75,6 @@ h2 {
 	color: white;
 	font-family: Helvetica, serif;
 	font-size: 2rem;
-	white-space: nowrap;
-	opacity: .8;
-}
-
-input {
-	color: white;
-	font-family: Helvetica, serif;
-	white-space: nowrap;
 	opacity: .8;
 }
 

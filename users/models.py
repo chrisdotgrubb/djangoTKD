@@ -27,7 +27,7 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-	email = models.EmailField(max_length=254, unique=True)
+	email = models.EmailField(max_length=255, unique=True)
 	username = models.CharField(max_length=32, unique=True)
 	created = models.DateTimeField(auto_now_add=True)
 	last_login = models.DateTimeField(blank=True, null=True)
@@ -51,7 +51,7 @@ class UserProfile(models.Model):
 	first = models.CharField(max_length=64, null=True, blank=True)
 	last = models.CharField(max_length=64, null=True, blank=True)
 	phone = PhoneNumberField(null=True, blank=True)
-	about = models.CharField(max_length=500, null=True, blank=True)
+	about = models.TextField(max_length=500, null=True, blank=True)
 	location = models.CharField(max_length=50, null=True, blank=True)
 	
 	updated = models.DateTimeField(auto_now=True)
@@ -84,7 +84,7 @@ class Course(models.Model):
 	ages = models.CharField(max_length=64, default='Kids and Adults')
 	cost = models.CharField(max_length=8, default='$')
 	billing = models.CharField(max_length=16, choices=(('WEEK', 'WEEK'), ('MONTH', 'MONTH'), ('YEAR', 'YEAR'), ('ONCE', 'ONCE')), default='MONTH')
-	description = models.CharField(max_length=256, default='DESCRIPT')
+	description = models.CharField(max_length=255, default='DESCRIPT')
 	
 	instructor = models.ManyToManyField(UserProfile, related_name='instructor', limit_choices_to={'is_instructor': True})
 
@@ -93,7 +93,7 @@ class ContactUs(models.Model):
 	name = models.CharField(max_length=64)
 	email = models.EmailField(max_length=255)
 	subject = models.CharField(max_length=255, null=True, blank=True)
-	message = models.CharField(max_length=1000, null=True, blank=True)
+	message = models.TextField(max_length=1000, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	resolved = models.BooleanField(default=False)
 	
@@ -112,7 +112,36 @@ class DirectMessage(models.Model):
 	sender = models.ForeignKey(UserProfile, related_name='sender', on_delete=models.SET_NULL, null=True)
 	receiver = models.ForeignKey(UserProfile, related_name='receiver', on_delete=models.SET_NULL, null=True)
 	
-	message = models.CharField(max_length=1000, null=True, blank=True)
+	message = models.TextField(max_length=1000, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_read = models.BooleanField(default=False)
+
+
+class ForumRoom(models.Model):
+	host = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True)
+	title = models.CharField(max_length=200)
+	description = models.TextField(max_length=1000, null=True, blank=True)
+	participants = models.ManyToManyField(UserProfile, related_name='participants', blank=True)
+	updated = models.DateTimeField(auto_now=True)
+	created = models.DateTimeField(auto_now_add=True)
 	
+	class Meta:
+		ordering = ['-updated', '-created']
+	
+	def __str__(self):
+		return self.title
+
+
+class ForumMessage(models.Model):
+	user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+	room = models.ForeignKey(ForumRoom, on_delete=models.CASCADE)
+	body = models.TextField(max_length=5000)
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+	
+	class Meta:
+		ordering = ['updated', 'created']
+	
+	def __str__(self):
+		return self.body
+

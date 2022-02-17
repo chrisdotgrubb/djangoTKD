@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %}Room |{% endblock title %}
+
+{% block content %}
+	<div>
+		<div>
+			<p><a href="{% url 'forum' %}">Back to Forum</a></p>
+		</div>
+		<div>
+			<h2>{{ room.title }}</h2>
+			<p>{{ room.description }}</p>
+			<p><a href="{% url 'users:user-profile' room.host.slug %}">{{ room.host }}</a></p>
+			<p>{{ room.created }}</p>
+		</div>
+		<div>
+			{% for message in messages %}
+				<div>
+					<p style="white-space: normal">{{ message }}</p>
+					<p><a href="{% url 'users:user-profile' message.user.slug %}">{{ message.user }}</a></p>
+					<p>{{ message.user.first }}</p>
+					<p>{{ message.created }}</p>
+				</div>
+			{% endfor %}
+		</div>
+		<div>
+			<form method="POST">
+				<div>
+					<div>
+						{{ form|crispy }}
+						{% csrf_token %}
+					</div>
+					<div>
+						<button type="submit">Send Reply</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock content %}

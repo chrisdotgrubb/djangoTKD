@@ -3,7 +3,7 @@ from django.shortcuts import reverse
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs
+from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs, ForumRoom, ForumMessage
 from django.utils.safestring import mark_safe
 
 User = get_user_model()
@@ -81,9 +81,23 @@ class DirectMessageConfig(admin.ModelAdmin):
 	list_display = ('sender', 'receiver', 'message', 'created', 'is_read')
 
 
+class ForumRoomConfig(admin.ModelAdmin):
+	list_display = ('host', 'title', 'description', 'created', 'get_participants')
+	
+	# noinspection PyMethodMayBeStatic
+	def get_participants(self, obj):
+		return ", ".join([i.user.username for i in obj.participants.all()])
+	
+	
+class ForumMessageConfig(admin.ModelAdmin):
+	list_display = ('user', 'room', 'body', 'created')
+	
+
 admin.site.register(User, UserAdminConfig)
 admin.site.register(UserProfile, UserProfileAdminConfig)
 admin.site.register(Course, CourseAdminConfig)
 admin.site.register(DirectMessageThread, DirectMessageThreadConfig)
 admin.site.register(DirectMessage, DirectMessageConfig)
 admin.site.register(ContactUs, ContactUsConfig)
+admin.site.register(ForumRoom, ForumRoomConfig)
+admin.site.register(ForumMessage, ForumMessageConfig)

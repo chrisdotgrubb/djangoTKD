@@ -97,9 +97,9 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 #todo set up crispy forms
 #todo finish styling, probably will switch to tailwind
+#todo finish about page
+#todo finish other-services page
 
-#todo add personal user messaging
-#todo add forum
 #todo settings to make profile fields public or private
 #todo add picture to profile
 

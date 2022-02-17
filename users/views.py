@@ -2,8 +2,8 @@ from django.db.models import Q
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponse
 from django.views import generic
-from .models import UserProfile, Course, MyUser, ContactUs, DirectMessageThread, DirectMessage
-from .forms import UserProfileModelForm, CustomUserCreationForm, CustomUserUpdateForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageThreadForm, DirectMessageForm
+from .models import UserProfile, Course, MyUser, ContactUs, DirectMessageThread, DirectMessage, ForumRoom, ForumMessage
+from .forms import CustomUserCreationForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -62,7 +62,7 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 		return reverse('users:profile')
 
 
-class UserProfileDetailView(generic.DetailView):
+class UserProfileDetailView(LoginRequiredMixin, generic.DetailView):
 	template_name = 'users/user_profile.html'
 	model = UserProfile
 
@@ -126,7 +126,6 @@ class ThreadView(LoginRequiredMixin, generic.View):
 		message = request.POST.get('message')
 		receiver = UserProfile.objects.filter(slug=slug)[0]
 		thread = DirectMessageThread.objects.filter(user=request.user.profile, receiver=receiver).first() or DirectMessageThread.objects.filter(user=receiver, receiver=request.user.profile).first()
-		# messages = DirectMessage.objects.filter(thread=thread)
 		
 		if form.is_valid():
 			new_message = DirectMessage(
@@ -139,3 +138,77 @@ class ThreadView(LoginRequiredMixin, generic.View):
 			return redirect('users:thread', slug)
 		
 		return render(request, 'users/thread.html')
+
+
+class ForumView(LoginRequiredMixin, generic.ListView):
+	template_name = 'users/forum.html'
+	context_object_name = 'rooms'
+	
+	def get_queryset(self):
+		return ForumRoom.objects.all()
+	
+	def get_context_data(self, object_list=None, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['my_rooms'] = ForumRoom.objects.filter(participants__user=self.request.user)
+		return context
+
+
+class ForumRoomCreateView(LoginRequiredMixin, generic.CreateView):
+	template_name = 'users/forum_room_create.html'
+	form_class = ForumRoomForm
+	
+	def get_initial(self):
+		initial = super(ForumRoomCreateView, self).get_initial()
+		initial['title'] = 'Enter A Title'
+		initial['description'] = 'Enter A Description'
+		return initial
+	
+	def form_valid(self, form):
+		room = form.save(commit=False)
+		room.host = self.request.user.profile
+		room = form.save()
+		room.participants.add(self.request.user.profile.id)
+		room.save()
+		self.kwargs['pk'] = room.id
+		print(room.id)
+		print(self.kwargs['pk'])
+		return super(ForumRoomCreateView, self).form_valid(form)
+	
+	def get_success_url(self):
+		print(self.kwargs['pk'])
+		return reverse('room', kwargs={'pk':self.kwargs['pk']})
+
+
+class ForumRoomView(LoginRequiredMixin, generic.View):
+	
+	def get(self, request, pk, *args, **kwargs):
+		form = ForumMessageForm()
+		room = ForumRoom.objects.filter(id=pk).first()
+		messages = ForumMessage.objects.filter(room_id=pk)
+		if room:
+			context = {
+				'form': form,
+				'room': room,
+				'messages': messages,
+			}
+			return render(request, 'users/room.html', context)
+		
+		else:
+			return redirect('forum')
+		
+	def post(self, request, pk, *args, **kwargs):
+		form = ForumMessageForm(request.POST)
+		room = ForumRoom.objects.filter(id=pk).first()
+		body = request.POST.get('body')
+		room.participants.add(self.request.user.profile.id)
+		
+		if form.is_valid():
+			new_message = ForumMessage(
+				user=self.request.user.profile,
+				room=room,
+				body=body,
+			)
+			new_message.save()
+			
+			return redirect('room', pk=room.id)
+	
