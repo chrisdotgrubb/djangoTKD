@@ -15,12 +15,12 @@
 			<p>{{ room.created }}</p>
 		</div>
 		<div>
-			{% for message in messages %}
+			{% for comment in comments %}
 				<div>
-					<p style="white-space: normal">{{ message }}</p>
-					<p><a href="{% url 'users:user-profile' message.user.slug %}">{{ message.user }}</a></p>
-					<p>{{ message.user.first }}</p>
-					<p>{{ message.created }}</p>
+					<p style="white-space: normal">{{ comment }}</p>
+					<p><a href="{% url 'users:user-profile' comment.user.slug %}">{{ comment.user }}</a></p>
+					<p>{{ comment.user.first }}</p>
+					<p>{{ comment.created }}</p>
 				</div>
 			{% endfor %}
 		</div>

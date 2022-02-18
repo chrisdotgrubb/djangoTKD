@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		{% if messages.all.count == 0 %}
+		{% if direct_messages.all.count == 0 %}
 		<div class="row">
 			<div>
 				<h3>No Messages</h3>
@@ -24,12 +24,12 @@
 		</div>
 		{% endif %}
 
-		{% for message in messages %}
+		{% for direct_message in direct_messages %}
 		<div class="row">
-			{% if message.sender == request.user.profile %}
-			<p style="color: aquamarine">{{ message.message }}</p>
+			{% if direct_message.sender == request.user.profile %}
+			<p style="color: aquamarine">{{ direct_message.message }}</p>
 			{% else %}
-			<p style="color: coral">{{ message.message }}</p>
+			<p style="color: coral">{{ direct_message.message }}</p>
 			{% endif %}
 		</div>
 		{% endfor %}
