@@ -89,8 +89,11 @@ class ContactUsMessagesView(UserPassesTestMixin, generic.ListView):
 
 class ThreadListView(LoginRequiredMixin, generic.View):
 	
+	def get_queryset(self, request):
+		return DirectMessageThread.objects.filter(Q(user=request.user.profile) | Q(receiver=request.user.profile))
+	
 	def get(self, request, *args, **kwargs):
-		threads = DirectMessageThread.objects.filter(Q(user=request.user.profile) | Q(receiver=request.user.profile))
+		threads = self.get_queryset(request=request)
 		
 		context = {
 			'threads': threads,

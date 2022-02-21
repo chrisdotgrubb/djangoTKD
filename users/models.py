@@ -112,7 +112,7 @@ class DirectMessageThread(models.Model):
 	receiver = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
 	
 	def __str__(self):
-		return self.user
+		return self.user.user.username
 	
 
 class DirectMessage(models.Model):
@@ -126,7 +126,7 @@ class DirectMessage(models.Model):
 	is_read = models.BooleanField(default=False)
 	
 	def __str__(self):
-		return self.thread
+		return self.sender.user.username, self.receiver.user.username
 	
 
 class ForumRoom(models.Model):

@@ -112,3 +112,6 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 #todo admin templates
 
 #todo email confirmation on signup
+
+#todo add validators
+#todo finish tests
