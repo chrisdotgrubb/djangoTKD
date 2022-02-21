@@ -87,6 +87,9 @@ class Course(models.Model):
 	description = models.CharField(max_length=255, default='DESCRIPT')
 	
 	instructor = models.ManyToManyField(UserProfile, related_name='instructor', limit_choices_to={'is_instructor': True})
+	
+	def __str__(self):
+		return self.name
 
 
 class ContactUs(models.Model):
@@ -100,11 +103,17 @@ class ContactUs(models.Model):
 	class Meta:
 		verbose_name_plural = 'Contact Us'
 		
+	def __str__(self):
+		return self.name
+	
 
 class DirectMessageThread(models.Model):
 	user = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
 	receiver = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
-
+	
+	def __str__(self):
+		return self.user
+	
 
 class DirectMessage(models.Model):
 	thread = models.ForeignKey(DirectMessageThread, related_name='thread', on_delete=models.CASCADE, blank=True)
@@ -115,7 +124,10 @@ class DirectMessage(models.Model):
 	message = models.TextField(max_length=1000, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_read = models.BooleanField(default=False)
-
+	
+	def __str__(self):
+		return self.thread
+	
 
 class ForumRoom(models.Model):
 	host = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True)
@@ -144,4 +156,3 @@ class ForumMessage(models.Model):
 	
 	def __str__(self):
 		return self.body
-
