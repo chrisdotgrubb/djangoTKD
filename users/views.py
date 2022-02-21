@@ -21,7 +21,7 @@ class HomeView(generic.CreateView):
 	form_class = ContactUsForm
 	
 	def get_success_url(self):
-		return reverse('index')
+		return reverse('index') + '#'
 
 
 class FAQView(generic.TemplateView):
