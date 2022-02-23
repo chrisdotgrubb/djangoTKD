@@ -2,8 +2,8 @@ from django.db.models import QuerySet
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
-from users.models import MyUser, Course, DirectMessageThread
-from users.views import ProfileView, ProfileUpdateView, CourseListView, ThreadListView
+from users.models import MyUser, Course, DirectMessageThread, ForumRoom, DirectMessage
+from users.views import ProfileView, ProfileUpdateView, CourseListView, ThreadListView, ThreadView, ForumView
 
 
 class SignupTest(TestCase):
@@ -184,7 +184,7 @@ class UserProfileUpdateTest(TestCase):
 		response = self.client.post(self.url, data=data)
 		self.assertEqual(response.status_code, 302)
 		self.assertRedirects(response, reverse('users:profile'))
-		
+	
 	def test_queryset(self):
 		request = RequestFactory().get(self.url)
 		request.user = self.user
@@ -217,7 +217,7 @@ class UserProfileDetailTest(TestCase):
 		self.client.logout()
 		self.response = self.client.get(self.url)
 		self.assertEqual(self.response.status_code, 302)
-		
+	
 	def test_template_index(self):
 		self.assertTemplateUsed(self.response, 'users/user_profile.html')
 	
@@ -282,7 +282,7 @@ class CourseListTest(TestCase):
 		view.request = request
 		queryset = view.get_queryset()
 		self.assertEqual(len(queryset), 3)
-		
+	
 	def test_template_index(self):
 		self.assertTemplateUsed(self.response, 'users/course_list.html')
 	
@@ -291,7 +291,8 @@ class CourseListTest(TestCase):
 	
 	def test_template_footer(self):
 		self.assertTemplateUsed(self.response, 'footer.html')
-	
+
+
 class ContactUsMessagesTest(TestCase):
 	
 	def setUp(self):
@@ -323,9 +324,9 @@ class ContactUsMessagesTest(TestCase):
 class ThreadListTest(TestCase):
 	
 	def setUp(self):
-		self.user1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
 		self.url = reverse('users:inbox')
-		self.client.force_login(self.user1)
+		self.client.force_login(self.user_1)
 		self.response = self.client.get(self.url)
 	
 	def test_get(self):
@@ -336,7 +337,7 @@ class ThreadListTest(TestCase):
 	
 	def test_queryset(self):
 		request = RequestFactory().get(self.url)
-		request.user = self.user1
+		request.user = self.user_1
 		view = ThreadListView()
 		view.request = request
 		queryset = view.get_queryset(request=view.request)
@@ -346,13 +347,13 @@ class ThreadListTest(TestCase):
 		user_2 = MyUser.objects.create_user('test2@test.com', 'user 2', 'G00Dpassword')
 		user_3 = MyUser.objects.create_user('test3@test.com', 'user 3', 'G00Dpassword')
 		
-		thread_1 = DirectMessageThread.objects.create(user=self.user1.profile, receiver=user_2.profile)
-		thread_2 = DirectMessageThread.objects.create(user=user_2.profile, receiver=self.user1.profile)
+		thread_1 = DirectMessageThread.objects.create(user=self.user_1.profile, receiver=user_2.profile)
+		thread_2 = DirectMessageThread.objects.create(user=user_2.profile, receiver=self.user_1.profile)
 		thread_3 = DirectMessageThread.objects.create(user=user_2.profile, receiver=user_3.profile)
 		queryset = view.get_queryset(request=view.request)
 		self.assertIsInstance(queryset, QuerySet)
 		self.assertEqual(len(queryset), 2)
-		
+	
 	def test_template_index(self):
 		self.assertTemplateUsed(self.response, 'users/inbox.html')
 	
@@ -380,26 +381,29 @@ class ThreadTest(TestCase):
 		self.assertEqual(self.response.status_code, 302)
 	
 	def test_post(self):
-		pass
+		data = {'message': 'message'}
+		response = self.client.post(self.url, data=data)
+		self.assertEqual(response.status_code, 302)
+		self.assertRedirects(response, reverse('users:thread', args=[self.user_2.profile.slug]))
 	
-	# def test_queryset(self):
-	# 	request = RequestFactory().get(self.url)
-	# 	request.user = self.user
-	# 	view = ThreadListView()
-	# 	view.request = request
-	# 	queryset = view.get_queryset(request=view.request)
-	# 	self.assertIsInstance(queryset, QuerySet)
-	# 	self.assertEqual(len(queryset), 0)
-	#
-	# 	user_2 = MyUser.objects.create_user('test2@test.com', 'user 2', 'G00Dpassword')
-	# 	user_3 = MyUser.objects.create_user('test3@test.com', 'user 3', 'G00Dpassword')
-	#
-	# 	thread_1 = DirectMessageThread.objects.create(user=self.user.profile, receiver=user_2.profile)
-	# 	thread_2 = DirectMessageThread.objects.create(user=user_2.profile, receiver=self.user.profile)
-	# 	thread_3 = DirectMessageThread.objects.create(user=user_2.profile, receiver=user_3.profile)
-	# 	queryset = view.get_queryset(request=view.request)
-	# 	self.assertIsInstance(queryset, QuerySet)
-	# 	self.assertEqual(len(queryset), 2)
+	def test_get_queryset(self):
+		response = self.client.get(self.url)
+		self.assertIsInstance(response.context['thread'], DirectMessageThread)
+		self.assertEqual(str(response.context['thread']), self.user_1.username)
+	
+	def test_not_thread(self):
+		DirectMessageThread.objects.all().delete()
+		self.assertEqual(len(DirectMessageThread.objects.all()), 0)
+		self.response = self.client.get(self.url)
+		self.assertEqual(len(DirectMessageThread.objects.all()), 1)
+		self.assertRedirects(self.response, reverse('users:thread', args=[self.user_2.profile.slug]))
+	
+	def test_not_is_valid(self):
+		data = {'message': ''}
+		response = self.client.post(self.url, data=data)
+		[print(a) for a in DirectMessage.objects.all()]
+		self.assertTemplateUsed(self.response, 'users/thread.html')
+		self.assertEqual(response.status_code, 200)
 	
 	def test_template_index(self):
 		self.assertTemplateUsed(self.response, 'users/thread.html')
@@ -409,5 +413,140 @@ class ThreadTest(TestCase):
 	
 	def test_template_footer(self):
 		self.assertTemplateUsed(self.response, 'footer.html')
+
+
+class ForumTest(TestCase):
+	
+	def setUp(self):
+		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		self.url = reverse('forum')
+		self.client.force_login(self.user_1)
+		self.response = self.client.get(self.url)
+	
+	def test_get(self):
+		self.assertEqual(self.response.status_code, 200)
+		self.client.logout()
+		self.response = self.client.get(self.url)
+		self.assertEqual(self.response.status_code, 302)
+	
+	def test_queryset(self):
+		request = RequestFactory().get(self.url)
+		view = ForumView()
+		view.request = request
+		queryset = view.get_queryset()
+		self.assertIsInstance(queryset, QuerySet)
+		self.assertEqual(len(queryset), 0)
 		
+		room = ForumRoom.objects.create(
+			host=self.user_1.profile,
+			title='title',
+			description='description',
+		)
+		room.participants.add(self.user_1.profile)
+		room.save()
 		
+		queryset = view.get_queryset()
+		self.assertIsInstance(queryset, QuerySet)
+		self.assertEqual(len(queryset), 1)
+		
+		room_2 = ForumRoom.objects.create(
+			host=self.user_1.profile,
+			title='title',
+			description='description',
+		)
+		room_2.participants.add(self.user_1.profile)
+		room_2.save()
+		
+		queryset = view.get_queryset()
+		self.assertIsInstance(queryset, QuerySet)
+		self.assertEqual(len(queryset), 2)
+	
+	def test_template_index(self):
+		self.assertTemplateUsed(self.response, 'users/forum.html')
+	
+	def test_template_navbar(self):
+		self.assertTemplateUsed(self.response, 'navbar.html')
+	
+	def test_template_footer(self):
+		self.assertTemplateUsed(self.response, 'footer.html')
+
+
+class ForumRoomCreateTest(TestCase):
+	
+	def setUp(self):
+		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		self.url = reverse('create-room')
+		self.client.force_login(self.user_1)
+		self.response = self.client.get(self.url)
+	
+	def test_get(self):
+		self.assertEqual(self.response.status_code, 200)
+		self.client.logout()
+		self.response = self.client.get(self.url)
+		self.assertEqual(self.response.status_code, 302)
+	
+	def test_post(self):
+		data = {'title': 'title', 'description': 'description'}
+		response = self.client.post(self.url, data=data)
+		self.assertEqual(response.status_code, 302)
+		self.assertRedirects(response, reverse('room', args=[1]))
+		
+		data = {'title': 'title2', 'description': 'description'}
+		response = self.client.post(self.url, data=data)
+		self.assertEqual(response.status_code, 302)
+		self.assertRedirects(response, reverse('room', args=[2]))
+	
+	def test_template_index(self):
+		self.assertTemplateUsed(self.response, 'users/forum_room_create.html')
+	
+	def test_template_navbar(self):
+		self.assertTemplateUsed(self.response, 'navbar.html')
+	
+	def test_template_footer(self):
+		self.assertTemplateUsed(self.response, 'footer.html')
+
+
+class ForumRoomTest(TestCase):
+	
+	def setUp(self):
+		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		
+		room = ForumRoom.objects.create(
+			host=self.user_1.profile,
+			title='title',
+			description='description',
+		)
+		room.participants.add(self.user_1.profile)
+		room.save()
+		
+		self.url = reverse('room', args=[room.id])
+		self.client.force_login(self.user_1)
+		self.response = self.client.get(self.url)
+	
+	def test_get(self):
+		self.assertEqual(self.response.status_code, 200)
+		self.client.logout()
+		self.response = self.client.get(self.url)
+		self.assertEqual(self.response.status_code, 302)
+	
+	def test_post(self):
+		data = {'body': 'body'}
+		response = self.client.post(self.url, data=data)
+		self.assertEqual(response.status_code, 302)
+		self.assertRedirects(response, reverse('room', args=[1]))
+	
+	def test_not_room(self):
+		self.assertEqual(self.response.status_code, 200)
+		ForumRoom.objects.all().delete()
+		self.response = self.client.get(self.url)
+		self.assertEqual(self.response.status_code, 302)
+		self.assertRedirects(self.response, reverse('forum'))
+	
+	def test_template_index(self):
+		self.assertTemplateUsed(self.response, 'users/room.html')
+	
+	def test_template_navbar(self):
+		self.assertTemplateUsed(self.response, 'navbar.html')
+	
+	def test_template_footer(self):
+		self.assertTemplateUsed(self.response, 'footer.html')

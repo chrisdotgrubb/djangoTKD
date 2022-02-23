@@ -131,7 +131,7 @@ class ThreadView(LoginRequiredMixin, generic.View):
 		receiver = UserProfile.objects.filter(slug=slug)[0]
 		thread = DirectMessageThread.objects.filter(user=request.user.profile, receiver=receiver).first() or DirectMessageThread.objects.filter(user=receiver, receiver=request.user.profile).first()
 		
-		if form.is_valid():
+		if form.is_valid() and message:
 			new_message = DirectMessage(
 				thread=thread,
 				sender=request.user.profile,

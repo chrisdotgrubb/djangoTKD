@@ -126,7 +126,7 @@ class DirectMessage(models.Model):
 	is_read = models.BooleanField(default=False)
 	
 	def __str__(self):
-		return self.sender.user.username, self.receiver.user.username
+		return f'{self.sender.user.username} {self.receiver.user.username}'
 	
 
 class ForumRoom(models.Model):
