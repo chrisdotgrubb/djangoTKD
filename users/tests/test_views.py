@@ -166,10 +166,15 @@ class ProfileTest(TestCase):
 
 class UserProfileUpdateTest(TestCase):
 	
+	user = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
+		cls.user.profile.slug = 'slug'
+		cls.url = reverse('users:profile-edit', args=[cls.user.profile.slug])
+		
 	def setUp(self):
-		self.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
-		self.user.profile.slug = 'slug'
-		self.url = reverse('users:profile-edit', args=[self.user.profile.slug])
 		self.client.force_login(self.user)
 		self.response = self.client.get(self.url)
 	
@@ -205,10 +210,15 @@ class UserProfileUpdateTest(TestCase):
 
 class UserProfileDetailTest(TestCase):
 	
+	user = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
+		cls.user.profile.slug = 'slug'
+		cls.url = reverse('users:user-profile', args=[cls.user.profile.slug])
+	
 	def setUp(self):
-		self.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
-		self.user.profile.slug = 'slug'
-		self.url = reverse('users:user-profile', args=[self.user.profile.slug])
 		self.client.force_login(self.user)
 		self.response = self.client.get(self.url)
 	
@@ -295,9 +305,14 @@ class CourseListTest(TestCase):
 
 class ContactUsMessagesTest(TestCase):
 	
+	user = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user = MyUser.objects.create_user('is_su@test.com', 'super', 'G00Dpassword', is_superuser=True)
+		cls.url = reverse('contact-us-messages')
+		
 	def setUp(self):
-		self.user = MyUser.objects.create_user('is_su@test.com', 'super', 'G00Dpassword', is_superuser=True)
-		self.url = reverse('contact-us-messages')
 		self.client.force_login(self.user)
 		self.response = self.client.get(self.url)
 	
@@ -323,9 +338,12 @@ class ContactUsMessagesTest(TestCase):
 
 class ThreadListTest(TestCase):
 	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		cls.url = reverse('users:inbox')
+		
 	def setUp(self):
-		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
-		self.url = reverse('users:inbox')
 		self.client.force_login(self.user_1)
 		self.response = self.client.get(self.url)
 	
@@ -366,10 +384,16 @@ class ThreadListTest(TestCase):
 
 class ThreadTest(TestCase):
 	
+	user_1 = None
+	user_2 = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		cls.user_2 = MyUser.objects.create_user('test2@test.com', 'user 2', 'G00Dpassword')
+		cls.thread = DirectMessageThread.objects.create(user=cls.user_1.profile, receiver=cls.user_2.profile)
+		
 	def setUp(self):
-		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
-		self.user_2 = MyUser.objects.create_user('test2@test.com', 'user 2', 'G00Dpassword')
-		self.thread = DirectMessageThread.objects.create(user=self.user_1.profile, receiver=self.user_2.profile)
 		self.client.force_login(self.user_1)
 		self.url = reverse('users:thread', args=[self.user_2.profile.slug])
 		self.response = self.client.get(self.url)
@@ -417,9 +441,14 @@ class ThreadTest(TestCase):
 
 class ForumTest(TestCase):
 	
+	user_1 = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		cls.url = reverse('forum')
+
 	def setUp(self):
-		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
-		self.url = reverse('forum')
 		self.client.force_login(self.user_1)
 		self.response = self.client.get(self.url)
 	
@@ -473,9 +502,14 @@ class ForumTest(TestCase):
 
 class ForumRoomCreateTest(TestCase):
 	
+	user_1 = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+		cls.url = reverse('create-room')
+	
 	def setUp(self):
-		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
-		self.url = reverse('create-room')
 		self.client.force_login(self.user_1)
 		self.response = self.client.get(self.url)
 	
@@ -508,18 +542,23 @@ class ForumRoomCreateTest(TestCase):
 
 class ForumRoomTest(TestCase):
 	
-	def setUp(self):
-		self.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
+	user_1 = None
+	
+	@classmethod
+	def setUpTestData(cls):
+		cls.user_1 = MyUser.objects.create_user('test1@test.com', 'user 1', 'G00Dpassword')
 		
 		room = ForumRoom.objects.create(
-			host=self.user_1.profile,
+			host=cls.user_1.profile,
 			title='title',
 			description='description',
 		)
-		room.participants.add(self.user_1.profile)
+		room.participants.add(cls.user_1.profile)
 		room.save()
 		
-		self.url = reverse('room', args=[room.id])
+		cls.url = reverse('room', args=[room.id])
+		
+	def setUp(self):
 		self.client.force_login(self.user_1)
 		self.response = self.client.get(self.url)
 	
