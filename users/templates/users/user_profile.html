@@ -10,12 +10,25 @@
 {% block content %}
 	<div>
 		<div>
-			<h2>{{ object }}</h2>
-			<h2>{{ object.first }}</h2>
+			<h2>{{ object.user.username }}</h2>
+			<br>
+			{% if object.settings.show_email %}
+			<h2>{{ object.user.email }}</h2>
+			{% endif %}
+			{% if object.settings.show_last %}
 			<h2>{{ object.last }}</h2>
-			<h2>{{ object.about }}</h2>
+			{% endif %}
+			{% if object.settings.show_phone %}
+			<h2>{{ object.phone }}</h2>
+			{% endif %}
+			{% if object.settings.show_location %}
 			<h2>{{ object.location }}</h2>
+			{% endif %}
+			{% if object.settings.show_about %}
+			<h2>{{ object.about }}</h2>
+			{% endif %}
 		</div>
+	<div>
 		<div>
 			<a href="{% url 'users:profile' %}">my private profile</a>
 		</div>
@@ -24,5 +37,6 @@
 				<a href="{% url 'users:thread' object.slug %}">Send {{ object.first }} a private message.</a>
 			</div>
 		{% endif %}
+	</div>
 	</div>
 {% endblock %}

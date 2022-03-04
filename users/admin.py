@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs, ForumRoom, ForumMessage
+from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs, ForumRoom, ForumMessage, ProfileSettings
 from django.utils.safestring import mark_safe
 
 User = get_user_model()
@@ -14,6 +14,10 @@ class InLineUserProfile(admin.StackedInline):
 	model = UserProfile
 
 
+class InLineProfileSettings(admin.StackedInline):
+	model = ProfileSettings
+	
+	
 class UserAdminConfig(UserAdmin):
 	inlines = [InLineUserProfile]
 	search_fields = ('email', 'username')
@@ -62,6 +66,7 @@ class UserAdminConfig(UserAdmin):
 
 
 class UserProfileAdminConfig(admin.ModelAdmin):
+	inlines = [InLineProfileSettings]
 	search_fields = ('first', 'last', 'phone', 'location')
 	list_filter = ('is_instructor', ('phone', EmptyFieldListFilter))
 	ordering = ('-updated',)

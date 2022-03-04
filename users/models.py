@@ -78,6 +78,16 @@ class UserProfile(models.Model):
 		return f'{self.first} {self.last}'
 
 
+class ProfileSettings(models.Model):
+	show_email = models.BooleanField(default=True)
+	show_last = models.BooleanField(default=True)
+	show_phone = models.BooleanField(default=False)
+	show_about = models.BooleanField(default=True)
+	show_location = models.BooleanField(default=True)
+	
+	settings = models.OneToOneField(UserProfile, related_name='settings', on_delete=models.CASCADE, null=True)
+	
+
 class Course(models.Model):
 	name = models.CharField(max_length=64, default='COURSE')
 	time = models.CharField(max_length=64, default='TIME')
