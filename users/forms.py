@@ -1,7 +1,8 @@
+from betterforms.multiform import MultiModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.forms.models import inlineformset_factory
-from .models import MyUser, UserProfile, ContactUs, DirectMessage, DirectMessageThread, ForumRoom, ForumMessage
+from .models import MyUser, UserProfile, ContactUs, DirectMessage, DirectMessageThread, ForumRoom, ForumMessage, ProfileSettings
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -40,6 +41,19 @@ class UserProfileUpdateModelForm(forms.ModelForm):
 			'about',
 			'location',
 		)
+
+
+class ProfileSettingsModelForm(forms.ModelForm):
+	class Meta:
+		model = ProfileSettings
+		exclude = ('settings',)
+
+#
+class ProfileEditMultiForm(MultiModelForm):
+	form_classes = {
+		'profile': UserProfileUpdateModelForm,
+		'settings': ProfileSettingsModelForm,
+	}
 
 
 class ContactUsForm(forms.ModelForm):

@@ -3,8 +3,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import render, reverse, redirect
 from django.views import generic
+from django.views.generic.detail import SingleObjectMixin
+
 from .models import UserProfile, Course, ContactUs, DirectMessageThread, DirectMessage, ForumRoom, ForumMessage
-from .forms import CustomUserCreationForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm
+from .forms import CustomUserCreationForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm, ProfileEditMultiForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -52,7 +54,15 @@ class ProfileView(LoginRequiredMixin, generic.ListView):
 
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 	template_name = 'users/profile_edit.html'
-	form_class = UserProfileUpdateModelForm
+	form_class = ProfileEditMultiForm
+	
+	def get_form_kwargs(self):
+		kwargs = super().get_form_kwargs()
+		kwargs.update(instance={
+			'profile': self.object,
+			'settings': self.object.settings,
+		})
+		return kwargs
 	
 	def get_queryset(self):
 		user = self.request.user

@@ -15,9 +15,12 @@
 			{% if object.settings.show_email %}
 			<h2>{{ object.user.email }}</h2>
 			{% endif %}
-			{% if object.settings.show_last %}
-			<h2>{{ object.last }}</h2>
-			{% endif %}
+			<h2>
+				{{ object.first }}
+				{% if object.settings.show_last %}
+					{{ object.last }}
+				{% endif %}
+			</h2>
 			{% if object.settings.show_phone %}
 			<h2>{{ object.phone }}</h2>
 			{% endif %}
