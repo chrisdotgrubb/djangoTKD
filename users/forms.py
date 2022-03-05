@@ -48,7 +48,7 @@ class ProfileSettingsModelForm(forms.ModelForm):
 		model = ProfileSettings
 		exclude = ('settings',)
 
-#
+
 class ProfileEditMultiForm(MultiModelForm):
 	form_classes = {
 		'profile': UserProfileUpdateModelForm,
