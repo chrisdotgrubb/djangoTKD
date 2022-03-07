@@ -3,10 +3,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.shortcuts import render, reverse, redirect
 from django.views import generic
-from django.views.generic.detail import SingleObjectMixin
-
 from .models import UserProfile, Course, ContactUs, DirectMessageThread, DirectMessage, ForumRoom, ForumMessage
-from .forms import CustomUserCreationForm, UserProfileUpdateModelForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm, ProfileEditMultiForm
+from .forms import CustomUserCreationForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm, ProfileEditMultiForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -171,12 +169,6 @@ class ForumRoomCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.Creat
 	template_name = 'users/forum_room_create.html'
 	form_class = ForumRoomForm
 	success_message = 'Successfully created a room'
-	
-	def get_initial(self):
-		initial = super(ForumRoomCreateView, self).get_initial()
-		initial['title'] = 'Enter A Title'
-		initial['description'] = 'Enter A Description'
-		return initial
 	
 	def form_valid(self, form):
 		room = form.save(commit=False)

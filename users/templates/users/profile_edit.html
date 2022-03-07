@@ -8,7 +8,36 @@
 		<div>
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{ form|crispy }}
+				<div>
+					<h2>@{{ object.user.username }}</h2>
+					<p>{{ form.profile.first }}</p>
+					<p>Username and first name are always visible</p>
+				</div>
+				<br>
+				<div>
+					<p>{{ form.profile.last }}</p>
+					<p style="width: 20px">{{ form.settings.show_last }} Share my last name</p>
+				</div>
+				<br>
+				<div>
+					<p>{{ object.user.email }}</p>
+					<p style="width: 20px">{{ form.settings.show_email }} Share my email</p>
+				</div>
+				<br>
+				<div>
+					<p>{{ form.profile.phone }}</p>
+					<p style="width: 20px">{{ form.settings.show_phone }} Share my phone number</p>
+				</div>
+				<br>
+				<div>
+					<p>{{ form.profile.location }}</p>
+					<p style="width: 20px">{{ form.settings.show_location }} Share my location</p>
+				</div>
+				<br>
+				<div>
+					<p>{{ form.profile.about }}</p>
+					<p style="width: 20px">{{ form.settings.show_about }} Share something about me</p>
+				</div>
 				<button type="submit">Submit</button>
 				<a href="{% url 'users:profile' %}">
 					<button type="button">Cancel</button>
