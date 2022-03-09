@@ -105,7 +105,6 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 #todo finish about page
 #todo finish other-services page
 
-#todo settings to make profile fields public or private
 #todo add picture to profile
 
 #todo add message on contact us success
@@ -114,8 +113,5 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 #todo email confirmation on signup
 
-#todo add validators
 #todo ForumRoom.title should probably be unique
-#todo DirectMessage.message should probably not be null=True, blank=True
 #todo finish tests
-#todo change ForumRoomCreateView get_initial to placeholder text

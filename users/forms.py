@@ -16,6 +16,18 @@ class CustomUserCreationForm(UserCreationForm):
 			'username': forms.TextInput(attrs={'placeholder': 'Enter a username'}),
 			'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
 		}
+	
+	def clean_username(self, *args, ** kwargs):
+		username = self.cleaned_data.get('username')
+		if 'fuc' in username:
+			raise forms.ValidationError('Not a valid username')
+		return username
+	
+	def clean_email(self, *args, ** kwargs):
+		email = self.cleaned_data.get('email')
+		if 'fuc' in email:
+			raise forms.ValidationError('Not a valid email')
+		return email
 
 
 class CustomUserUpdateForm(UserCreationForm):

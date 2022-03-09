@@ -131,7 +131,7 @@ class DirectMessage(models.Model):
 	sender = models.ForeignKey(UserProfile, related_name='sender', on_delete=models.SET_NULL, null=True)
 	receiver = models.ForeignKey(UserProfile, related_name='receiver', on_delete=models.SET_NULL, null=True)
 	
-	message = models.TextField(max_length=1000, null=True, blank=True)
+	message = models.TextField(max_length=1000)
 	created = models.DateTimeField(auto_now_add=True)
 	is_read = models.BooleanField(default=False)
 	
