@@ -413,7 +413,7 @@ class ThreadTest(TestCase):
 	def test_get_queryset(self):
 		response = self.client.get(self.url)
 		self.assertIsInstance(response.context['thread'], DirectMessageThread)
-		self.assertEqual(str(response.context['thread']), self.user_1.username)
+		self.assertEqual(str(response.context['thread']), f'{self.user_1.username} to {self.user_2.username}')
 	
 	def test_not_thread(self):
 		DirectMessageThread.objects.all().delete()
@@ -480,7 +480,7 @@ class ForumTest(TestCase):
 		
 		room_2 = ForumRoom.objects.create(
 			host=self.user_1.profile,
-			title='title',
+			title='title2',
 			description='description',
 		)
 		room_2.participants.add(self.user_1.profile)

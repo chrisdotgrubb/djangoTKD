@@ -113,5 +113,4 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 #todo email confirmation on signup
 
-#todo ForumRoom.title should probably be unique
 #todo finish tests

@@ -46,7 +46,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(MyUser, related_name='profile', on_delete=models.CASCADE, null=True)
+	user = models.OneToOneField(MyUser, related_name='profile', on_delete=models.CASCADE)
 	
 	first = models.CharField(max_length=64, null=True, blank=True)
 	last = models.CharField(max_length=64, null=True, blank=True)
@@ -118,18 +118,18 @@ class ContactUs(models.Model):
 	
 
 class DirectMessageThread(models.Model):
-	user = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
-	receiver = models.ForeignKey(UserProfile, related_name='+', on_delete=models.SET_NULL, null=True)
+	user = models.ForeignKey(UserProfile, related_name='+', on_delete=models.CASCADE)
+	receiver = models.ForeignKey(UserProfile, related_name='+', on_delete=models.CASCADE)
 	
 	def __str__(self):
-		return self.user.user.username
+		return f'{self.user.user.username} to {self.receiver.user.username}'
 	
 
 class DirectMessage(models.Model):
 	thread = models.ForeignKey(DirectMessageThread, related_name='thread', on_delete=models.CASCADE, blank=True)
 	
-	sender = models.ForeignKey(UserProfile, related_name='sender', on_delete=models.SET_NULL, null=True)
-	receiver = models.ForeignKey(UserProfile, related_name='receiver', on_delete=models.SET_NULL, null=True)
+	sender = models.ForeignKey(UserProfile, related_name='sender', on_delete=models.CASCADE)
+	receiver = models.ForeignKey(UserProfile, related_name='receiver', on_delete=models.CASCADE)
 	
 	message = models.TextField(max_length=1000)
 	created = models.DateTimeField(auto_now_add=True)
@@ -140,8 +140,8 @@ class DirectMessage(models.Model):
 	
 
 class ForumRoom(models.Model):
-	host = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True)
-	title = models.CharField(max_length=200)
+	host = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+	title = models.CharField(max_length=200, unique=True)
 	description = models.TextField(max_length=1000, null=True, blank=True)
 	participants = models.ManyToManyField(UserProfile, related_name='participants', blank=True)
 	updated = models.DateTimeField(auto_now=True)

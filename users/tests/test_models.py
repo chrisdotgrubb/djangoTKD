@@ -168,26 +168,26 @@ class TestContactUs(TestCase):
 		
 
 class TestDirectMessageThread(TestCase):
-	user1 = None
-	user2 = None
+	user_1 = None
+	user_2 = None
 	receiver = None
 	username = None
 	
 	@classmethod
 	def setUpTestData(cls):
 		cls.username = 'test user'
-		cls.user1 = MyUser.objects.create_user(email='a@a.com', username=cls.username, password='password')
-		cls.user2 = MyUser.objects.create_user(email='b@a.com', username='another', password='password')
-		cls.thread = DirectMessageThread.objects.create(user=cls.user1.profile, receiver=cls.user2.profile)
+		cls.user_1 = MyUser.objects.create_user(email='a@a.com', username=cls.username, password='password')
+		cls.user_2 = MyUser.objects.create_user(email='b@a.com', username='another', password='password')
+		cls.thread = DirectMessageThread.objects.create(user=cls.user_1.profile, receiver=cls.user_2.profile)
 		
 	def test_user(self):
-		self.assertEqual(self.thread.user, self.user1.profile)
+		self.assertEqual(self.thread.user, self.user_1.profile)
 	
 	def test_receiver(self):
-		self.assertEqual(self.thread.receiver, self.user2.profile)
+		self.assertEqual(self.thread.receiver, self.user_2.profile)
 		
 	def test_str(self):
-		self.assertEqual(str(self.thread), self.user1.username)
+		self.assertEqual(str(self.thread), f'{self.user_1.username} to {self.user_2.username}')
 		
 	
 	
