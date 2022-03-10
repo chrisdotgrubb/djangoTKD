@@ -30,6 +30,27 @@ MIDDLEWARE = [
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'handlers': {
+		'console': {
+			'class': 'logging.StreamHandler',
+			'formatter': 'format_1',
+		},
+	},
+	'formatters': {
+		'format_1': {
+			'format': '({levelname}) [{pathname}:{funcName}:{lineno:d}] "{message}" ({levelname})',
+			'style': '{',
+		},
+	},
+	'root': {
+		'handlers': ['console'],
+		'level': 'DEBUG',
+	},
+}
+
 ROOT_URLCONF = 'djangoTKD.urls'
 
 TEMPLATES = [
