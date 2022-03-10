@@ -18,7 +18,7 @@
 			{% for comment in comments %}
 				<div>
 					<p style="white-space: normal">{{ comment }}</p>
-					<p><a href="{% url 'users:user-profile' comment.user.slug %}">{{ comment.user }}</a></p>
+					<p><a href="{% url 'users:user-profile' comment.user.slug %}">@{{ comment.user.user.username }}</a></p>
 					<p>{{ comment.user.first }}</p>
 					<p>{{ comment.created }}</p>
 				</div>

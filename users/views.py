@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import reverse, redirect
+from django.template.response import TemplateResponse
 from django.views import generic
 from .models import UserProfile, Course, ContactUs, DirectMessageThread, DirectMessage, ForumRoom, ForumMessage
 from .forms import CustomUserCreationForm, ContactUsForm, DirectMessageForm, ForumRoomForm, ForumMessageForm, ProfileEditMultiForm
@@ -110,7 +111,7 @@ class ThreadListView(LoginRequiredMixin, generic.View):
 			'threads': threads,
 		}
 		
-		return render(request, 'users/inbox.html', context)
+		return TemplateResponse(request, 'users/inbox.html', context)
 
 
 class ThreadView(LoginRequiredMixin, generic.View):
@@ -127,7 +128,7 @@ class ThreadView(LoginRequiredMixin, generic.View):
 				'direct_messages': direct_messages,
 			}
 			
-			return render(request, 'users/thread.html', context)
+			return TemplateResponse(request, 'users/thread.html', context)
 		else:
 			thread = DirectMessageThread(
 				user=request.user.profile,
@@ -153,7 +154,7 @@ class ThreadView(LoginRequiredMixin, generic.View):
 			messages.add_message(self.request, messages.INFO, 'Message sent successfully.')
 			return redirect('users:thread', slug)
 		
-		return render(request, 'users/thread.html')
+		return TemplateResponse(request, 'users/thread.html')
 
 
 class ForumView(LoginRequiredMixin, generic.ListView):
@@ -199,7 +200,7 @@ class ForumRoomView(LoginRequiredMixin, generic.View):
 				'room': room,
 				'comments': comments,
 			}
-			return render(request, 'users/room.html', context)
+			return TemplateResponse(request, 'users/room.html', context)
 		
 		else:
 			return redirect('forum')
