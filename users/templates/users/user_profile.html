@@ -10,7 +10,7 @@
 {% block content %}
 	<div>
 		<div>
-			<h2>{{ object.user.username }}</h2>
+			<h2>@{{ object.user.username }}</h2>
 			<br>
 			{% if object.settings.show_email %}
 			<h2>{{ object.user.email }}</h2>
@@ -33,11 +33,17 @@
 		</div>
 	<div>
 		<div>
-			<a href="{% url 'users:profile' %}">my private profile</a>
+			<a href="{% url 'users:profile' %}">My private profile</a>
 		</div>
 		{% if not object.user.username == request.user.username %}
 			<div>
-				<a href="{% url 'users:thread' object.slug %}">Send {{ object.first }} a private message.</a>
+				<a href="{% url 'users:thread' object.slug %}">
+					{% if object.first %}
+						Send {{ object.first }} a private message.
+					{% else %}
+						Send @{{ object.user.username }} a private message.
+					{% endif %}
+				</a>
 			</div>
 		{% endif %}
 	</div>

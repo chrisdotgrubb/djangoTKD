@@ -13,6 +13,7 @@ class SignupView(generic.CreateView):
 	form_class = CustomUserCreationForm
 	
 	def get_success_url(self):
+		messages.add_message(self.request, messages.INFO, 'Account created, please log in.')
 		return reverse('login')
 
 
@@ -21,6 +22,7 @@ class HomeView(generic.CreateView):
 	form_class = ContactUsForm
 	
 	def get_success_url(self):
+		messages.add_message(self.request, messages.INFO, 'Thank you for contacting us.')
 		return reverse('index') + '#'
 
 
@@ -68,6 +70,7 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 		return queryset
 	
 	def get_success_url(self):
+		messages.add_message(self.request, messages.INFO, 'Updated successfully.')
 		return reverse('users:profile')
 
 
@@ -147,6 +150,7 @@ class ThreadView(LoginRequiredMixin, generic.View):
 				message=message,
 			)
 			new_message.save()
+			messages.add_message(self.request, messages.INFO, 'Message sent successfully.')
 			return redirect('users:thread', slug)
 		
 		return render(request, 'users/thread.html')
@@ -213,5 +217,5 @@ class ForumRoomView(LoginRequiredMixin, generic.View):
 				body=body,
 			)
 			new_message.save()
-			messages.add_message(request, messages.INFO, 'Comment Posted.')
+			messages.add_message(request, messages.INFO, 'Comment posted successfully.')
 			return redirect('room', pk=room.id)

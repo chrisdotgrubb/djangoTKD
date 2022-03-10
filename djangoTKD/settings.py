@@ -107,8 +107,6 @@ PHONENUMBER_DEFAULT_REGION = 'US'
 
 #todo add picture to profile
 
-#todo add message on contact us success
-
 #todo admin templates
 
 #todo email confirmation on signup
