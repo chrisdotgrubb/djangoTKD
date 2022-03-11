@@ -18,6 +18,8 @@ class MyUserManager(BaseUserManager):
 		user.set_password(password)
 		user.save()
 		logging.debug(f'User "{username}" created from manager')
+		profile = UserProfile.objects.create(user=user)
+		profile.save()
 		return user
 	
 	def create_superuser(self, email, username, password=None, **other_fields):
@@ -73,6 +75,9 @@ class UserProfile(models.Model):
 			else:
 				self.slug = slug
 		super().save(*args, **kwargs)
+		if not ProfileSettings.objects.filter(settings=self.user.profile).exists():
+			settings = ProfileSettings.objects.create(settings=self.user.profile)
+			settings.save()
 	
 	
 	def __str__(self):

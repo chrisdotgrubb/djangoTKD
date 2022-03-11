@@ -31,10 +31,11 @@ class CustomUserCreationForm(UserCreationForm):
 			raise forms.ValidationError('Not a valid email')
 		return email
 	
-	# def save(self, commit=True):
-	# 	user = super().save()
-	# 	logging.debug(f'User "{user.username}" created from form')
-	# 	return user
+	def save(self, commit=True):
+		user = super().save()
+		logging.debug(f'User "{user.username}" created from form')
+		UserProfile.objects.create(user=user)
+		return user
 
 
 class CustomUserUpdateForm(UserChangeForm):
