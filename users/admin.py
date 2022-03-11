@@ -6,7 +6,7 @@ from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from .models import MyUser, UserProfile, Course, DirectMessage, DirectMessageThread, ContactUs, ForumRoom, ForumMessage, ProfileSettings
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserUpdateForm
 from django.utils.safestring import mark_safe
 
 User = get_user_model()
@@ -14,6 +14,7 @@ User = get_user_model()
 
 class InLineUserProfile(admin.StackedInline):
 	model = UserProfile
+	readonly_fields = ('slug',)
 
 
 class InLineProfileSettings(admin.StackedInline):
@@ -21,6 +22,7 @@ class InLineProfileSettings(admin.StackedInline):
 	
 	
 class UserAdminConfig(UserAdmin):
+	form = CustomUserUpdateForm
 	add_form = CustomUserCreationForm
 	add_fieldsets = ((None, {'fields':('username', 'email', 'password1', 'password2')}),('Permissions', {'fields':('is_active', 'is_staff', 'is_superuser')}))
 	inlines = [InLineUserProfile]
@@ -28,7 +30,6 @@ class UserAdminConfig(UserAdmin):
 	list_filter = ('is_active', 'is_staff', 'is_superuser', ('last_login', EmptyFieldListFilter))
 	ordering = ('-created',)
 	list_display = ('username', 'email', 'created', 'last_login', 'is_active', 'is_staff', 'is_superuser')
-	
 	actions = ['make_staff', 'make_not_staff', 'make_superuser', 'make_not_superuser']
 	
 	fieldsets = (

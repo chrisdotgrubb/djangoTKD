@@ -1,3 +1,4 @@
+import logging
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
@@ -16,13 +17,13 @@ class MyUserManager(BaseUserManager):
 		user = self.model(email=email, username=username, **other_fields)
 		user.set_password(password)
 		user.save()
+		logging.debug(f'User "{username}" created from manager')
 		return user
 	
 	def create_superuser(self, email, username, password=None, **other_fields):
 		other_fields.setdefault('is_active', True)
 		other_fields.setdefault('is_staff', True)
 		other_fields.setdefault('is_superuser', True)
-		
 		return self.create_user(email, username, password, **other_fields)
 
 
