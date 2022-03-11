@@ -1,3 +1,5 @@
+import logging
+
 from django.db.models import QuerySet
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
@@ -320,6 +322,7 @@ class ContactUsMessagesTest(TestCase):
 		self.assertEqual(self.response.status_code, 200)
 		self.user.is_superuser = False
 		self.user.save()
+		logging.debug('Testing 403! "Forbidden (Permission denied): /contact-us-messages/" expected just below!!')
 		self.response = self.client.get(self.url)
 		self.assertEqual(self.response.status_code, 403)
 		self.client.logout()

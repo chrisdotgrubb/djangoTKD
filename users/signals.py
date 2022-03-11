@@ -19,6 +19,13 @@ def save_profile(sender, instance, **kwargs):
 @receiver(post_save, sender=UserProfile)
 def create_settings(sender, instance, created, **kwargs):
 	if created:
+		logging.info(f'Profile "{instance}" created')
 		ProfileSettings.objects.create(settings=instance)
+		
+
+@receiver(post_save, sender=ProfileSettings)
+def create_settings(sender, instance, created, **kwargs):
+	if created:
+		logging.info(f'Settings "{instance}" created')
 		
 		
