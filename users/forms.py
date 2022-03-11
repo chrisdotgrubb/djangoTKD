@@ -1,3 +1,5 @@
+import logging
+
 from betterforms.multiform import MultiModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField, UserChangeForm
@@ -28,6 +30,12 @@ class CustomUserCreationForm(UserCreationForm):
 		if 'fuc' in email:
 			raise forms.ValidationError('Not a valid email')
 		return email
+	
+	# def save(self, commit=True):
+	# 	user = super().save()
+	# 	logging.debug(f'User "{user.username}" created from form')
+	# 	# UserProfile.objects.create(user=user)
+	# 	return user
 
 
 class CustomUserUpdateForm(UserChangeForm):
