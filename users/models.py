@@ -18,8 +18,6 @@ class MyUserManager(BaseUserManager):
 		user.set_password(password)
 		user.save()
 		logging.debug(f'User "{username}" created from manager')
-		# if not UserProfile.objects.filter(user=user).exists():
-		# 	UserProfile.objects.create(user=user)
 		return user
 	
 	def create_superuser(self, email, username, password=None, **other_fields):
@@ -44,9 +42,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']
 	
-	def save(self, *args, **kwargs):
+	def save(self, admin=False, *args, **kwargs):
 		super().save(*args, **kwargs)
-		if not UserProfile.objects.filter(user=self).exists():
+		if not UserProfile.objects.filter(user=self).exists() and not admin:
 			UserProfile.objects.create(user=self)
 			logging.debug(f'Profile "{self.profile}" created from MyUser model')
 	

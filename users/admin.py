@@ -26,7 +26,7 @@ class UserAdminConfig(UserAdmin):
 	form = CustomUserUpdateForm
 	add_form = CustomUserCreationForm
 	add_fieldsets = ((None, {'fields':('username', 'email', 'password1', 'password2')}),('Permissions', {'fields':('is_active', 'is_staff', 'is_superuser')}))
-	# inlines = [InLineUserProfile]
+	inlines = [InLineUserProfile]
 	search_fields = ('email', 'username')
 	list_filter = ('is_active', 'is_staff', 'is_superuser', ('last_login', EmptyFieldListFilter))
 	ordering = ('-created',)
@@ -37,6 +37,16 @@ class UserAdminConfig(UserAdmin):
 	fieldsets = (
 		(None, {'fields': ('username', 'password', 'email')}),
 		('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}))
+	
+	def save_model(self, request, obj, form, change):
+		obj.save(admin=True)
+
+	def save_related(self, request, form, formsets, change):
+		form.save_m2m()
+		for formset in formsets:
+			self.save_formset(request, form, formset, change=change)
+		if not UserProfile.objects.filter(user=form.instance).exists():
+			UserProfile.objects.create(user=form.instance)
 	
 	def make_staff(self, request, queryset):
 		updated = queryset.update(is_staff=True)
