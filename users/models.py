@@ -18,8 +18,8 @@ class MyUserManager(BaseUserManager):
 		user.set_password(password)
 		user.save()
 		logging.debug(f'User "{username}" created from manager')
-		profile = UserProfile.objects.create(user=user)
-		profile.save()
+		# if not UserProfile.objects.filter(user=user).exists():
+		# 	UserProfile.objects.create(user=user)
 		return user
 	
 	def create_superuser(self, email, username, password=None, **other_fields):
@@ -43,6 +43,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 	
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['username']
+	
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		if not UserProfile.objects.filter(user=self).exists():
+			UserProfile.objects.create(user=self)
+			logging.debug(f'Profile "{self.profile}" created from MyUser model')
 	
 	def __str__(self):
 		return self.username
@@ -76,9 +82,8 @@ class UserProfile(models.Model):
 				self.slug = slug
 		super().save(*args, **kwargs)
 		if not ProfileSettings.objects.filter(settings=self.user.profile).exists():
-			settings = ProfileSettings.objects.create(settings=self.user.profile)
-			settings.save()
-	
+			ProfileSettings.objects.create(settings=self.user.profile)
+			logging.debug(f'Settings {self.settings} created from UserProfile model')
 	
 	def __str__(self):
 		return f'{self.first} {self.last}'

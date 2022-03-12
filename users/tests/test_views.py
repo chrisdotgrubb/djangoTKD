@@ -172,9 +172,10 @@ class UserProfileUpdateTest(TestCase):
 	
 	@classmethod
 	def setUpTestData(cls):
-		cls.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
-		cls.user.profile.slug = 'slug'
-		cls.url = reverse('users:profile-edit', args=[cls.user.profile.slug])
+		cls.user = MyUser.objects.create(email='test@test.com', username='user', password='G00Dpassword')
+		# cls.user.profile.first = 'slug'
+		# cls.user.profile.save()
+		cls.url = reverse('users:profile-edit', args=['user'])  # cls.user.profile.slug
 		
 	def setUp(self):
 		self.client.force_login(self.user)
@@ -217,8 +218,9 @@ class UserProfileDetailTest(TestCase):
 	@classmethod
 	def setUpTestData(cls):
 		cls.user = MyUser.objects.create_user('test@test.com', 'user', 'G00Dpassword')
-		cls.user.profile.slug = 'slug'
-		cls.url = reverse('users:user-profile', args=[cls.user.profile.slug])
+		# cls.user.profile.slug = 'slug'
+		# cls.user.profile.save()
+		cls.url = reverse('users:user-profile', args=['user'])  # cls.user.profile.slug
 	
 	def setUp(self):
 		self.client.force_login(self.user)

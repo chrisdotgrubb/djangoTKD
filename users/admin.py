@@ -1,3 +1,5 @@
+import logging
+
 from django.utils.translation import ngettext
 from django.contrib.admin import RelatedOnlyFieldListFilter, EmptyFieldListFilter
 from django.shortcuts import reverse
