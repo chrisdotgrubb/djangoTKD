@@ -7,7 +7,12 @@
 		<div>
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{ form|crispy }}
+				{{ form.username|as_crispy_field }}
+				<div id="username-error">&nbsp;</div>
+				{{ form.email|as_crispy_field}}
+				<div id="email-error">&nbsp;</div>
+				{{ form.password1|as_crispy_field }}
+				{{ form.password2|as_crispy_field }}
 				<button type="submit">Sign up</button>
 			</form>
 		</div>

@@ -1,6 +1,8 @@
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import reverse, redirect
 from django.template.response import TemplateResponse
 from django.views import generic
@@ -220,3 +222,27 @@ class ForumRoomView(LoginRequiredMixin, generic.View):
 			new_message.save()
 			messages.add_message(request, messages.INFO, 'Comment posted successfully.')
 			return redirect('room', pk=room.id)
+
+
+def check_username(request):
+	username = request.POST.get('username')
+	if username:
+		if get_user_model().objects.filter(username=username).exists():
+			return HttpResponse('<div id="username-error" style="color:red">Username taken</div>')
+		else:
+			return HttpResponse('<div id="username-error" style="color:green">Username available</div>')
+	else:
+		return HttpResponse('<div id="username-error">&nbsp;</div>')
+
+
+def check_email(request):
+	email = request.POST.get('email')
+	if email:
+		if get_user_model().objects.filter(email=email).exists():
+			return HttpResponse('<div id="email-error" style="color:red">Email taken</div>')
+		else:
+			return HttpResponse('<div id="email-error" style="color:green">Email available</div>')
+	else:
+		return HttpResponse('<div id="email-error">&nbsp;</div>')
+	
+	

@@ -12,37 +12,33 @@ class CustomUserCreationForm(UserCreationForm):
 	
 	class Meta:
 		model = MyUser
-		fields = ('username', 'email', 'password1', 'password2')
+		fields = ('username', 'email', 'password1', 'password2')  # 'hx-swap': "outerHTML"}
 		field_classes = {'username': UsernameField, }
 		widgets = {
-			'username': forms.TextInput(attrs={'placeholder': 'Enter a username'}),
-			'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
+			'username': forms.TextInput(
+				attrs={'placeholder': 'Enter a username', 'hx-post': "/check_username/", 'hx-swap': "outerHTML", 'hx-trigger': "keyup changed delay:500ms", 'hx-target': "#username-error"}),
+			'email': forms.EmailInput(
+				attrs={'placeholder': 'Enter your email', 'hx-post': "/check_email/", 'hx-swap': "outerHTML", 'hx-trigger': "keyup changed delay:500ms", 'hx-target': "#email-error"}),
 		}
 	
-	def clean_username(self, *args, ** kwargs):
+	def clean_username(self, *args, **kwargs):
 		username = self.cleaned_data.get('username')
 		if 'fuc' in username:
 			raise forms.ValidationError('Not a valid username')
 		return username
 	
-	def clean_email(self, *args, ** kwargs):
+	def clean_email(self, *args, **kwargs):
 		email = self.cleaned_data.get('email')
 		if 'fuc' in email:
 			raise forms.ValidationError('Not a valid email')
 		return email
-	
-	# def save(self, commit=True):
-	# 	user = super().save()
-	# 	logging.debug(f'User "{user.username}" created from form')
-	# 	# UserProfile.objects.create(user=user)
-	# 	return user
 
 
 class CustomUserUpdateForm(UserChangeForm):
 	class Meta:
 		model = MyUser
 		fields = ('username', 'email')
-		field_classes = {'username': UsernameField,}
+		field_classes = {'username': UsernameField, }
 
 
 class UserProfileUpdateModelForm(forms.ModelForm):
@@ -58,9 +54,9 @@ class UserProfileUpdateModelForm(forms.ModelForm):
 		widgets = {
 			'first': forms.TextInput(attrs={'placeholder': 'Enter your first name'}),
 			'last': forms.TextInput(attrs={'placeholder': 'Enter your last name'}),
-			'phone':  forms.TextInput(attrs={'placeholder': 'Enter your phone number'}),
+			'phone': forms.TextInput(attrs={'placeholder': 'Enter your phone number'}),
 			'location': forms.TextInput(attrs={'placeholder': 'Enter your city/state'}),
-			'about':  forms.Textarea(attrs={'placeholder': 'Enter something about yourself'}),
+			'about': forms.Textarea(attrs={'placeholder': 'Enter something about yourself'}),
 		}
 
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from users.views import HomeView, CourseListView, SignupView, FAQView, AboutView, OtherServicesView, ContactUsMessagesView, ForumView, ForumRoomCreateView, ForumRoomView
+from users.views import HomeView, CourseListView, SignupView, FAQView, AboutView, OtherServicesView, ContactUsMessagesView, ForumView, ForumRoomCreateView, ForumRoomView, check_username, check_email
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 urlpatterns = [
@@ -23,3 +23,10 @@ urlpatterns = [
 	path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 	path('password-reset-complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
+
+htmx_urlpatterns = [
+	path('check_username/', check_username, name="check-username"),
+	path('check_email/', check_email, name="check-email"),
+]
+
+urlpatterns += htmx_urlpatterns
